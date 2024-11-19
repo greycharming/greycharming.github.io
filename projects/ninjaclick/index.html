@@ -355,29 +355,69 @@
     <div class="container mx-auto px-4">
         <h2 class="text-3xl font-bold text-center mb-12">Unlock Silent Achievements</h2>
         
-        <!-- Scrollable Achievement Tabs -->
-        <div class="relative mb-8">
-            <div class="achievement-tabs flex overflow-x-auto scrollbar-hide pb-4" style="-webkit-overflow-scrolling: touch;">
-                <div class="flex gap-4 mx-auto">
-                    <button class="achievement-tab active flex-shrink-0 flex flex-col items-center p-4 rounded-lg" data-tab="ninja">
-                        <span class="text-2xl mb-2">🥷</span>
-                        <span class="font-medium whitespace-nowrap">Ninja Skills</span>
-                    </button>
-                    <button class="achievement-tab flex-shrink-0 flex flex-col items-center p-4 rounded-lg" data-tab="social">
-                        <span class="text-2xl mb-2">🤝</span>
-                        <span class="font-medium whitespace-nowrap">Social Stealth</span>
-                    </button>
-                    <button class="achievement-tab flex-shrink-0 flex flex-col items-center p-4 rounded-lg" data-tab="legendary">
-                        <span class="text-2xl mb-2">👑</span>
-                        <span class="font-medium whitespace-nowrap">Legendary</span>
-                    </button>
-                    <button class="achievement-tab flex-shrink-0 flex flex-col items-center p-4 rounded-lg" data-tab="specialist">
-                        <span class="text-2xl mb-2">🎯</span>
-                        <span class="font-medium whitespace-nowrap">Specialist</span>
-                    </button>
-                </div>
-            </div>
+<!-- Updated Tab Section with Indicators -->
+<div class="relative mb-8">
+    <!-- Left Indicator -->
+    <button class="scroll-indicator left hidden md:flex absolute left-0 top-1/2 -translate-y-1/2 bg-white rounded-full shadow-lg p-2 z-10 hover:bg-gray-50">
+        <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+        </svg>
+    </button>
+
+    <div class="achievement-tabs flex overflow-x-auto scrollbar-hide pb-4" style="-webkit-overflow-scrolling: touch;">
+        <div class="flex gap-4 mx-auto" id="tabsContainer">
+            <!-- Original Tabs -->
+            <button class="achievement-tab active flex-shrink-0 flex flex-col items-center p-4 rounded-lg" data-tab="ninja">
+                <span class="text-2xl mb-2">🥷</span>
+                <span class="font-medium whitespace-nowrap">Ninja Skills</span>
+                <span class="text-xs text-gray-500">view cards</span>
+            </button>
+            <button class="achievement-tab flex-shrink-0 flex flex-col items-center p-4 rounded-lg" data-tab="social">
+                <span class="text-2xl mb-2">🤝</span>
+                <span class="font-medium whitespace-nowrap">Social Stealth</span>
+                <span class="text-xs text-gray-500">view cards</span>
+            </button>
+            <button class="achievement-tab flex-shrink-0 flex flex-col items-center p-4 rounded-lg" data-tab="legendary">
+                <span class="text-2xl mb-2">👑</span>
+                <span class="font-medium whitespace-nowrap">Legendary</span>
+                <span class="text-xs text-gray-500">view cards</span>
+            </button>
+            <button class="achievement-tab flex-shrink-0 flex flex-col items-center p-4 rounded-lg" data-tab="specialist">
+                <span class="text-2xl mb-2">🎯</span>
+                <span class="font-medium whitespace-nowrap">Specialist</span>
+                <span class="text-xs text-gray-500">view cards</span>
+            </button>
+            <!-- Duplicate Set for Infinite Scroll -->
+            <button class="achievement-tab clone flex-shrink-0 flex flex-col items-center p-4 rounded-lg" data-tab="ninja">
+                <span class="text-2xl mb-2">🥷</span>
+                <span class="font-medium whitespace-nowrap">Ninja Skills</span>
+                <span class="text-xs text-gray-500">view cards</span>
+            </button>
+            <button class="achievement-tab clone flex-shrink-0 flex flex-col items-center p-4 rounded-lg" data-tab="social">
+                <span class="text-2xl mb-2">🤝</span>
+                <span class="font-medium whitespace-nowrap">Social Stealth</span>
+                <span class="text-xs text-gray-500">view cards</span>
+            </button>
+            <button class="achievement-tab clone flex-shrink-0 flex flex-col items-center p-4 rounded-lg" data-tab="legendary">
+                <span class="text-2xl mb-2">👑</span>
+                <span class="font-medium whitespace-nowrap">Legendary</span>
+                <span class="text-xs text-gray-500">view cards</span>
+            </button>
+            <button class="achievement-tab clone flex-shrink-0 flex flex-col items-center p-4 rounded-lg" data-tab="specialist">
+                <span class="text-2xl mb-2">🎯</span>
+                <span class="font-medium whitespace-nowrap">Specialist</span>
+                <span class="text-xs text-gray-500">view cards</span>
+            </button>
         </div>
+    </div>
+
+    <!-- Right Indicator -->
+    <button class="scroll-indicator right hidden md:flex absolute right-0 top-1/2 -translate-y-1/2 bg-white rounded-full shadow-lg p-2 z-10 hover:bg-gray-50">
+        <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+        </svg>
+    </button>
+</div>
 
         <!-- Achievement Content Sections -->
         
@@ -725,16 +765,22 @@
 
 
 <style>
+/* Previous styles remain the same */
+.scroll-indicator {
+    transition: opacity 0.3s ease;
+    opacity: 0.8;
+    cursor: pointer;
+    border: 1px solid #e5e7eb;
+}
+
+.scroll-indicator:hover {
+    opacity: 1;
+}
+
 .achievement-tabs {
-    -webkit-overflow-scrolling: touch;
-    overflow-x: scroll;
-    scroll-behavior: smooth;
-    scrollbar-width: none;
-    -ms-overflow-style: none;
-    cursor: grab;
-    user-select: none;
-    -webkit-user-select: none;
-    padding: 0.5rem 0;
+    position: relative;
+    mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+    -webkit-mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
 }
 
 .achievement-tabs::-webkit-scrollbar {
@@ -787,83 +833,155 @@
 }
 </style>
 
+</style>
+
+<!-- Updated Script -->
 <script>
-document.addEventListener('DOMContentLoaded', function() {
-    const tabContainer = document.querySelector('.achievement-tabs');
-    const tabs = document.querySelectorAll('.achievement-tab');
+    document.addEventListener('DOMContentLoaded', function() {
+        const tabContainer = document.querySelector('.achievement-tabs');
+        const tabsInner = document.getElementById('tabsContainer');
+        const tabs = document.querySelectorAll('.achievement-tab');
+        const leftIndicator = document.querySelector('.scroll-indicator.left');
+        const rightIndicator = document.querySelector('.scroll-indicator.right');
+        
+        let isScrolling = false;
+        let isMouseOver = false;
+        let scrollInterval;
+        let isDown = false;
+        let startX;
+        let scrollLeft;
     
-    let isDown = false;
-    let startX;
-    let scrollLeft;
-
-    // Mouse Events
-    tabContainer.addEventListener('mousedown', (e) => {
-        isDown = true;
-        tabContainer.classList.add('dragging');
-        startX = e.pageX - tabContainer.offsetLeft;
-        scrollLeft = tabContainer.scrollLeft;
-    });
-
-    tabContainer.addEventListener('mouseleave', () => {
-        isDown = false;
-        tabContainer.classList.remove('dragging');
-    });
-
-    tabContainer.addEventListener('mouseup', () => {
-        isDown = false;
-        tabContainer.classList.remove('dragging');
-    });
-
-    tabContainer.addEventListener('mousemove', (e) => {
-        if (!isDown) return;
-        e.preventDefault();
-        const x = e.pageX - tabContainer.offsetLeft;
-        const walk = (x - startX) * 2;
-        tabContainer.scrollLeft = scrollLeft - walk;
-    });
-
-    // Touch Events
-    tabContainer.addEventListener('touchstart', (e) => {
-        isDown = true;
-        tabContainer.classList.add('dragging');
-        startX = e.touches[0].pageX - tabContainer.offsetLeft;
-        scrollLeft = tabContainer.scrollLeft;
-    });
-
-    tabContainer.addEventListener('touchend', () => {
-        isDown = false;
-        tabContainer.classList.remove('dragging');
-    });
-
-    tabContainer.addEventListener('touchmove', (e) => {
-        if (!isDown) return;
-        const x = e.touches[0].pageX - tabContainer.offsetLeft;
-        const walk = (x - startX) * 2;
-        tabContainer.scrollLeft = scrollLeft - walk;
-    });
-
-    // Tab click handling
-    tabs.forEach(tab => {
-        tab.addEventListener('click', (e) => {
-            // Only trigger if we haven't dragged
-            if (!tabContainer.classList.contains('dragging')) {
-                tabs.forEach(t => t.classList.remove('active'));
-                tab.classList.add('active');
-                
-                document.querySelectorAll('.achievement-content').forEach(content => {
-                    content.classList.remove('active');
-                    content.classList.add('hidden');
-                });
-                
-                const contentId = `${tab.dataset.tab}-content`;
-                const content = document.getElementById(contentId);
-                content.classList.remove('hidden');
-                content.classList.add('active');
+        function updateIndicators() {
+            const scrollPosition = tabContainer.scrollLeft;
+            const maxScroll = tabContainer.scrollWidth - tabContainer.clientWidth;
+            
+            leftIndicator.style.display = scrollPosition > 20 ? 'flex' : 'none';
+            rightIndicator.style.display = scrollPosition < maxScroll - 20 ? 'flex' : 'none';
+        }
+    
+        function resetScroll() {
+            if (tabContainer.scrollLeft >= tabContainer.scrollWidth / 2) {
+                tabContainer.scrollLeft = 0;
+            }
+        }
+    
+        function startAutoScroll() {
+            if (!isMouseOver && !isDown) {
+                scrollInterval = setInterval(() => {
+                    if (!isMouseOver && !isDown) {
+                        if (tabContainer.scrollLeft >= (tabContainer.scrollWidth / 2) - 20) {
+                            tabContainer.scrollLeft = 0;
+                        } else {
+                            tabContainer.scrollLeft += 1;
+                        }
+                        updateIndicators();
+                    }
+                }, 30);
+            }
+        }
+    
+        // Initialize auto-scroll
+        startAutoScroll();
+    
+        // Mouse enter/leave events
+        tabContainer.addEventListener('mouseenter', () => {
+            isMouseOver = true;
+            clearInterval(scrollInterval);
+        });
+    
+        tabContainer.addEventListener('mouseleave', () => {
+            isMouseOver = false;
+            if (!isDown) {
+                startAutoScroll();
             }
         });
+    
+        // Scroll Indicators click events
+        leftIndicator.addEventListener('click', () => {
+            clearInterval(scrollInterval);
+            tabContainer.scrollBy({
+                left: -100,
+                behavior: 'smooth'
+            });
+            setTimeout(startAutoScroll, 1000);
+        });
+    
+        rightIndicator.addEventListener('click', () => {
+            clearInterval(scrollInterval);
+            tabContainer.scrollBy({
+                left: 100,
+                behavior: 'smooth'
+            });
+            setTimeout(startAutoScroll, 1000);
+        });
+    
+        // Mouse Events for dragging
+        tabContainer.addEventListener('mousedown', (e) => {
+            isDown = true;
+            tabContainer.classList.add('dragging');
+            startX = e.pageX - tabContainer.offsetLeft;
+            scrollLeft = tabContainer.scrollLeft;
+            clearInterval(scrollInterval);
+        });
+    
+        tabContainer.addEventListener('mouseleave', () => {
+            isDown = false;
+            tabContainer.classList.remove('dragging');
+            if (!isMouseOver) {
+                startAutoScroll();
+            }
+        });
+    
+        tabContainer.addEventListener('mouseup', () => {
+            isDown = false;
+            tabContainer.classList.remove('dragging');
+            if (!isMouseOver) {
+                startAutoScroll();
+            }
+        });
+    
+        tabContainer.addEventListener('mousemove', (e) => {
+            if (!isDown) return;
+            e.preventDefault();
+            const x = e.pageX - tabContainer.offsetLeft;
+            const walk = (x - startX) * 2;
+            tabContainer.scrollLeft = scrollLeft - walk;
+            updateIndicators();
+        });
+    
+        // Touch Events
+        tabContainer.addEventListener('touchstart', (e) => {
+            isDown = true;
+            tabContainer.classList.add('dragging');
+            startX = e.touches[0].pageX - tabContainer.offsetLeft;
+            scrollLeft = tabContainer.scrollLeft;
+            clearInterval(scrollInterval);
+        });
+    
+        tabContainer.addEventListener('touchend', () => {
+            isDown = false;
+            tabContainer.classList.remove('dragging');
+            startAutoScroll();
+        });
+    
+        tabContainer.addEventListener('touchmove', (e) => {
+            if (!isDown) return;
+            const x = e.touches[0].pageX - tabContainer.offsetLeft;
+            const walk = (x - startX) * 2;
+            tabContainer.scrollLeft = scrollLeft - walk;
+            updateIndicators();
+        });
+    
+        // Scroll event listener for updating indicators
+        tabContainer.addEventListener('scroll', () => {
+            updateIndicators();
+            resetScroll();
+        });
+    
+        // Initial update of indicators
+        updateIndicators();
     });
-});
-</script>
+    </script>
 
 
 
