@@ -3,134 +3,102 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GreyCharming's Portfolio</title>
+    <title>KnowMyAnarky's Portfolio</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" rel="stylesheet">
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
-        
-        body {
-            font-family: 'Inter', sans-serif;
-            background-color: #f8f9fa;
-        }
-
-        .nav-link {
-            position: relative;
-            transition: color 0.3s ease;
-        }
-
-        .nav-link::after {
-            content: '';
-            position: absolute;
-            width: 0;
-            height: 2px;
-            bottom: -2px;
-            left: 0;
-            background-color: #6366f1;
-            transition: width 0.3s ease;
-        }
-
-        .nav-link:hover::after {
-            width: 100%;
-        }
-
-        .project-card {
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-        }
-
-        .project-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
-        }
-
-        .gradient-text {
-            background: linear-gradient(45deg, #6366f1, #8b5cf6);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-    </style>
+    <link href="styles.css" rel="stylesheet">
 </head>
-<body class="min-h-screen">
-    <!-- Navigation -->
-    <nav class="bg-white shadow-sm fixed w-full z-10">
-        <div class="max-w-6xl mx-auto px-4">
-            <div class="flex justify-between h-16">
-                <div class="flex items-center">
-                    <span class="text-xl font-bold gradient-text">GreyCharming</span>
+<body>
+    <nav class="nav fixed w-full z-10">
+        <div class="container">
+            <div class="nav-content">
+                <div class="brand">
+                    <h1 class="gradient-text">KnowMyAnarky</h1>
                 </div>
-                <div class="flex items-center space-x-8">
-                    <a href="/" class="nav-link text-gray-600 hover:text-indigo-600">Home</a>
-                    <a href="/blog" class="nav-link text-gray-600 hover:text-indigo-600">Blog</a>
-                    <a href="#projects" class="nav-link text-gray-600 hover:text-indigo-600">Projects</a>
-                    <a href="#contact" class="nav-link text-gray-600 hover:text-indigo-600">Contact</a>
+                <div class="nav-links">
+                    <a href="#" class="nav-link">Home</a>
+                    <a href="#projects" class="nav-link">Projects</a>
+                    <a href="/blog" class="nav-link">Blog</a>
+                    <a href="#contact" class="nav-link">Contact</a>
                 </div>
             </div>
         </div>
     </nav>
 
-    <!-- Hero Section -->
-    <section class="pt-32 pb-20 bg-gradient-to-b from-indigo-50 to-white">
-        <div class="max-w-6xl mx-auto px-4">
-            <div class="text-center">
-                <h1 class="text-4xl md:text-6xl font-bold mb-6 gradient-text">
-                    Welcome to My Digital Space
-                </h1>
-                <p class="text-xl text-gray-600 mb-8">
-                    Developer, Creator, and Digital Enthusiast
-                </p>
+    <section class="hero-section">
+        <div class="container">
+            <div class="hero-content">
+                <h2 class="hero-title gradient-text">The invitation is chaos, the answer is yours.</h2>
+                <p class="hero-subtitle">Developer & Digital Creator</p>
+                <div class="hero-buttons">
+                    <a href="#projects" class="btn btn-primary">View Projects</a>
+                    <a href="https://github.com/greycharming" class="btn" target="_blank">GitHub</a>
+                </div>
             </div>
         </div>
     </section>
 
-    <!-- Projects Section -->
-    <section id="projects" class="py-20">
-        <div class="max-w-6xl mx-auto px-4">
-            <h2 class="text-3xl font-bold mb-12 text-center">Featured Projects</h2>
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                <!-- NinjaClick Project -->
-                <a href="/projects/ninjaclick" class="project-card bg-white rounded-lg overflow-hidden shadow-md">
-                    <div class="p-6">
-                        <div class="text-3xl mb-4">🤫</div>
-                        <h3 class="text-xl font-semibold mb-2">NinjaClick</h3>
-                        <p class="text-gray-600">Silent mouse technology for stealth gaming sessions.</p>
+    <section id="projects" class="section">
+        <div class="container">
+            <h2 class="gradient-text text-3xl font-bold mb-12 text-center">Projects</h2>
+            
+            <div class="mb-16">
+                <h3 class="text-2xl font-semibold mb-8">Featured Project</h3>
+                <a href="projects/ninjaclick">
+                    <div class="project-card">
+                        <div class="flex items-center mb-4">
+                            <span class="text-4xl mr-4">🤫</span>
+                            <h4 class="text-2xl font-bold">NinjaClick</h4>
+                        </div>
+                        <p class="mb-4">A revolutionary silent mouse technology for stealth gaming sessions.</p>
+                        <div class="flex space-x-4">
+                            <span class="tech-tag">React</span>
+                            <span class="tech-tag">TailwindCSS</span>
+                            <span class="tech-tag">Node.js</span>
+                        </div>
+                    </div>
+                </a>
+            </div>
+
+            <h3 class="text-2xl font-semibold mb-8">Other Projects</h3>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <a href="/blog" class="project-card">
+                    <div class="flex items-center mb-4">
+                        <span class="text-3xl mr-4">📝</span>
+                        <h4 class="text-xl font-semibold">Tech Blog</h4>
+                    </div>
+                    <p class="mb-4">Sharing thoughts, tutorials, and adventures in technology.</p>
+                    <div class="flex space-x-4">
+                        <span class="tech-tag">Writing</span>
+                        <span class="tech-tag">Tech</span>
                     </div>
                 </a>
 
-                <!-- Blog Project -->
-                <a href="/blog" class="project-card bg-white rounded-lg overflow-hidden shadow-md">
-                    <div class="p-6">
-                        <div class="text-3xl mb-4">📝</div>
-                        <h3 class="text-xl font-semibold mb-2">Blog</h3>
-                        <p class="text-gray-600">Thoughts, tutorials, and tech adventures.</p>
+                <div class="project-card">
+                    <div class="flex items-center mb-4">
+                        <span class="text-3xl mr-4">🚀</span>
+                        <h4 class="text-xl font-semibold">Coming Soon</h4>
                     </div>
-                </a>
-
-                <!-- Placeholder Project -->
-                <div class="project-card bg-white rounded-lg overflow-hidden shadow-md">
-                    <div class="p-6">
-                        <div class="text-3xl mb-4">🚀</div>
-                        <h3 class="text-xl font-semibold mb-2">Coming Soon</h3>
-                        <p class="text-gray-600">More exciting projects in development.</p>
+                    <p class="mb-4">More exciting projects in development.</p>
+                    <div class="flex space-x-4">
+                        <span class="tech-tag">Future</span>
+                        <span class="tech-tag">Innovation</span>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Contact Section -->
-    <section id="contact" class="py-20 bg-indigo-50">
-        <div class="max-w-6xl mx-auto px-4 text-center">
-            <h2 class="text-3xl font-bold mb-8">Get In Touch</h2>
-            <p class="text-xl text-gray-600 mb-8">Have a question or want to collaborate?</p>
-            <a href="mailto:your-email@example.com" class="inline-block bg-indigo-600 text-white px-8 py-3 rounded-lg hover:bg-indigo-700 transition duration-300">
-                Say Hello
-            </a>
+    <section id="contact" class="section">
+        <div class="container text-center">
+            <h2 class="gradient-text text-3xl font-bold mb-8">Get In Touch</h2>
+            <p class="text-xl mb-8">Have a question or want to collaborate?</p>
+            <a href="mailto:your-email@example.com" class="btn btn-primary">Say Hello</a>
         </div>
     </section>
 
-    <!-- Footer -->
-    <footer class="bg-white py-8">
-        <div class="max-w-6xl mx-auto px-4 text-center">
-            <p class="text-gray-600">© 2024 GreyCharming. All rights reserved.</p>
+    <footer class="py-8">
+        <div class="container text-center">
+            <p>© 2024 KnowMyAnarky. All rights reserved.</p>
         </div>
     </footer>
 </body>

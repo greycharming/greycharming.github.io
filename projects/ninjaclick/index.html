@@ -198,9 +198,14 @@
     </style>
 </head>
 <body>
+    
     <!-- Navigation -->
     <nav class="nav">
         <div class="container nav-container">
+            <!-- Home Link -->
+<a href="/" class="home-link">
+    <span>←</span> Back to Portfolio
+</a>
             <div class="nav-logo">🤫 SilentClick™</div>
             <div class="nav-links">
                 <a href="#features" class="nav-link">Features</a>
@@ -216,7 +221,9 @@
         <div class="container">
             <h1 class="text-4xl md:text-6xl font-bold mb-4">Your Mouse Just Got a Silencer</h1>
             <p class="text-xl mb-8 opacity-90">Because nobody needs to hear you rage-clicking at 3 AM</p>
-            <button class="btn btn-primary">Start Your Silent Journey</button>
+            <button onclick="openCheckout('pro')" class="bg-purple-600 text-white py-3 px-6 rounded-lg text-lg hover:bg-purple-700 transition-colors">
+                Start Your Silent Journey
+              </button>
         </div>
     </section>
 
@@ -244,53 +251,103 @@
         </div>
     </section>
 
-    <!-- Pricing -->
-    <section id="pricing" class="pricing">
-        <div class="container">
-            <h2 class="text-3xl font-bold text-center mb-12">Choose Your Silence Level</h2>
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                <!-- Basic Plan -->
-                <div class="price-card">
-                    <h3 class="text-2xl font-bold mb-4">Ninja Trainee</h3>
-                    <div class="text-purple-600 text-4xl font-bold mb-6">$12.99<span class="text-lg">/mo</span></div>
-                    <ul class="check-list mb-8">
-                        <li>12,000 silent clicks</li>
-                        <li>Basic stealth support</li>
-                        <li>Click tracking</li>
-                    </ul>
-                    <button class="btn btn-primary w-full">Choose Basic</button>
-                </div>
+<!-- Pricing -->
+<section id="pricing" class="pricing py-16">
+    <div class="container mx-auto px-4">
+        <h2 class="text-3xl font-bold text-center mb-12">Choose Your Silence Level</h2>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <!-- Basic Plan -->
+            <div class="price-card text-center p-8 rounded-lg border shadow-lg hover:shadow-xl transition-shadow">
+                <h3 class="text-2xl font-bold mb-4">Ninja Trainee</h3>
+                <div class="text-purple-600 text-4xl font-bold mb-6">$12.99<span class="text-lg">/mo</span></div>
+                <ul class="check-list space-y-3 mb-8">
+                    <li class="flex items-center justify-center">
+                        <span>12,000 silent clicks</span>
+                    </li>
+                    <li class="flex items-center justify-center">
+                        <span>Basic stealth support</span>
+                    </li>
+                    <li class="flex items-center justify-center">
+                        <span>Click tracking</span>
+                    </li>
+                </ul>
+                <button onclick="openCheckout('basic')" class="w-full bg-purple-600 text-white py-3 px-6 rounded-lg hover:bg-purple-700 transition-colors">
+                    Choose Basic
+                </button>
+            </div>
 
-                <!-- Pro Plan -->
-                <div class="price-card popular">
-                    <span class="popular-badge">Most Popular</span>
-                    <h3 class="text-2xl font-bold mb-4">Stealth Master</h3>
-                    <div class="text-purple-600 text-4xl font-bold mb-6">$19.99<span class="text-lg">/mo</span></div>
-                    <ul class="check-list mb-8">
-                        <li>25,000 silent clicks</li>
-                        <li>Priority ninja support</li>
-                        <li>Advanced analytics</li>
-                        <li>Click meditation sessions</li>
-                    </ul>
-                    <button class="btn btn-primary w-full">Choose Pro</button>
-                </div>
+            <!-- Pro Plan -->
+            <div class="price-card popular text-center p-8 rounded-lg border shadow-lg hover:shadow-xl transition-shadow relative bg-purple-50">
+                <span class="popular-badge absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-purple-600 text-white px-4 py-1 rounded-full text-sm">Most Popular</span>
+                <h3 class="text-2xl font-bold mb-4">Stealth Master</h3>
+                <div class="text-purple-600 text-4xl font-bold mb-6">$19.99<span class="text-lg">/mo</span></div>
+                <ul class="check-list space-y-3 mb-8">
+                    <li class="flex items-center justify-center">
+                        <span>25,000 silent clicks</span>
+                    </li>
+                    <li class="flex items-center justify-center">
+                        <span>Priority ninja support</span>
+                    </li>
+                    <li class="flex items-center justify-center">
+                        <span>Advanced analytics</span>
+                    </li>
+                    <li class="flex items-center justify-center">
+                        <span>Click meditation sessions</span>
+                    </li>
+                </ul>
+                <button onclick="openCheckout('pro')" class="w-full bg-purple-600 text-white py-3 px-6 rounded-lg hover:bg-purple-700 transition-colors">
+                    Choose Pro
+                </button>
+            </div>
 
-                <!-- Elite Plan -->
-                <div class="price-card">
-                    <h3 class="text-2xl font-bold mb-4">Silent Assassin</h3>
-                    <div class="text-purple-600 text-4xl font-bold mb-6">$29.99<span class="text-lg">/mo</span></div>
-                    <ul class="check-list mb-8">
-                        <li>Unlimited silent clicks</li>
-                        <li>24/7 stealth support</li>
-                        <li>Premium analytics</li>
-                        <li>Click meditation sessions</li>
-                        <li>Custom silence profiles</li>
-                    </ul>
-                    <button class="btn btn-primary w-full">Choose Elite</button>
-                </div>
+            <!-- Elite Plan -->
+            <div class="price-card text-center p-8 rounded-lg border shadow-lg hover:shadow-xl transition-shadow">
+                <h3 class="text-2xl font-bold mb-4">Silent Assassin</h3>
+                <div class="text-purple-600 text-4xl font-bold mb-6">$29.99<span class="text-lg">/mo</span></div>
+                <ul class="check-list space-y-3 mb-8">
+                    <li class="flex items-center justify-center">
+                        <span>Unlimited silent clicks</span>
+                    </li>
+                    <li class="flex items-center justify-center">
+                        <span>24/7 stealth support</span>
+                    </li>
+                    <li class="flex items-center justify-center">
+                        <span>Premium analytics</span>
+                    </li>
+                    <li class="flex items-center justify-center">
+                        <span>Click meditation sessions</span>
+                    </li>
+                    <li class="flex items-center justify-center">
+                        <span>Custom silence profiles</span>
+                    </li>
+                </ul>
+                <button onclick="openCheckout('elite')" class="w-full bg-purple-600 text-white py-3 px-6 rounded-lg hover:bg-purple-700 transition-colors">
+                    Choose Elite
+                </button>
             </div>
         </div>
-    </section>
+    </div>
+</section>
+
+<style>
+.price-card {
+    background: white;
+    transition: all 0.3s ease;
+}
+
+.price-card:hover {
+    transform: translateY(-5px);
+}
+
+.check-list {
+    list-style: none;
+    padding: 0;
+}
+
+.popular {
+    border-color: #9333ea;
+}
+</style>
 
 <!-- Funny Features Section -->
 <section class="py-16 bg-gray-50">
@@ -341,6 +398,34 @@
                 <h3 class="font-semibold">Stealth Master</h3>
                 <p class="text-sm text-gray-600">Your roommate thinks you're just staring at the screen</p>
             </div>
+            <!-- Badge 1 -->
+            <div class="achievement text-center p-4">
+                <div class="text-3xl mb-2">🥷</div>
+                <h3 class="font-semibold">The Ghost Gamer</h3>
+                <p class="text-sm text-gray-600">Played for 8 hours straight. Family thinks you're meditating.</p>
+            </div>
+
+            <!-- Badge 2 -->
+            <div class="achievement text-center p-4">
+                <div class="text-3xl mb-2">🐱</div>
+                <h3 class="font-semibold">Cat Confusion Master</h3>
+                <p class="text-sm text-gray-600">Successfully bamboozled your cat 100 times with silent clicks.</p>
+            </div>
+
+            <!-- Badge 3 -->
+            <div class="achievement text-center p-4">
+                <div class="text-3xl mb-2">👔</div>
+                <h3 class="font-semibold">Meeting Multitasker</h3>
+                <p class="text-sm text-gray-600">Reached a new high score during a quarterly review.</p>
+            </div>
+
+            <!-- Badge 4 -->
+            <div class="achievement text-center p-4">
+                <div class="text-3xl mb-2">🌙</div>
+                <h3 class="font-semibold">3 AM Legend</h3>
+                <p class="text-sm text-gray-600">"Just one more game" turned into sunrise. Again.</p>
+            </div>
+
         </div>
     </div>
 </section>
@@ -428,13 +513,25 @@
                 <div class="text-4xl font-bold mb-2">1,234,567,890</div>
                 <p>Clicks Silenced</p>
             </div>
-            <div>
-                <div class="text-4xl font-bold mb-2">42,069</div>
-                <p>Relationships Saved</p>
+            <div class="stat-card bg-white p-6 rounded-lg shadow-lg text-center">
+                <div class="text-4xl font-bold text-purple-600 mb-2">42,069</div>
+                <div class="text-sm text-gray-600">Relationships Saved</div>
             </div>
-            <div>
-                <div class="text-4xl font-bold mb-2">∞</div>
-                <p>Happy Cats</p>
+            <div class="stat-card bg-white p-6 rounded-lg shadow-lg text-center">
+                <div class="text-4xl font-bold text-purple-600 mb-2">347</div>
+                <div class="text-sm text-gray-600">Arguments Avoided</div>
+            </div>
+            <div class="stat-card bg-white p-6 rounded-lg shadow-lg text-center">
+                <div class="text-4xl font-bold text-purple-600 mb-2">8.2GB</div>
+                <div class="text-sm text-gray-600">Noise Pollution Prevented</div>
+            </div>
+            <div class="stat-card bg-white p-6 rounded-lg shadow-lg text-center">
+                <div class="text-4xl font-bold text-purple-600 mb-2">42</div>
+                <div class="text-sm text-gray-600">Cats Still Suspicious</div>
+            </div>
+            <div class="stat-card bg-white p-6 rounded-lg shadow-lg text-center">
+                <div class="text-4xl font-bold text-purple-600 mb-2">∞</div>
+                <div class="text-sm text-gray-600">Excuses Generated</div>
             </div>
         </div>
     </div>
@@ -477,7 +574,9 @@
         <div class="container">
             <h2 class="text-3xl font-bold mb-4">Ready to Embrace the Silence?</h2>
             <p class="text-xl mb-8">Join thousands of satisfied ninjas who've made the switch to silent clicking.</p>
-            <button class="btn btn-primary">Start Your Silent Journey</button>
+            <button onclick="openCheckout('pro')" class="bg-purple-600 text-white py-3 px-6 rounded-lg text-lg hover:bg-purple-700 transition-colors">
+                Start Your Silent Journey
+              </button>
         </div>
     </section>
 
@@ -488,5 +587,152 @@
             <p class="text-sm opacity-75">© 2024 SilentClick. All rights silently reserved.</p>
         </div>
     </footer>
+
+<!-- Add this right before the closing body tag -->
+
+<div id="checkoutModal" class="modal hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
+    <div class="modal-content bg-white p-8 rounded-lg max-w-md w-full mx-4">
+      <div class="text-right">
+        <button onclick="closeModal()" class="text-gray-500 hover:text-gray-700">&times;</button>
+      </div>
+      
+      <div id="step1" class="step">
+        <h2 class="text-2xl font-bold mb-4">Complete Your Order</h2>
+        <p class="mb-4">Plan: <span id="selectedPlan" class="font-semibold"></span></p>
+        <p class="mb-4">Monthly Price: $<span id="selectedPrice"></span></p>
+        
+        <form id="checkoutForm" class="space-y-4">
+          <div>
+            <label class="block text-sm font-medium mb-1">Email</label>
+            <input type="email" required class="w-full p-2 border rounded" placeholder="your@email.com">
+          </div>
+          <div>
+            <label class="block text-sm font-medium mb-1">Full Name</label>
+            <input type="text" required class="w-full p-2 border rounded" placeholder="John Doe">
+          </div>
+          <div>
+            <label class="block text-sm font-medium mb-1">Company (Optional)</label>
+            <input type="text" class="w-full p-2 border rounded" placeholder="Company Name">
+          </div>
+          <button type="submit" class="w-full bg-purple-600 text-white py-2 px-4 rounded hover:bg-purple-700">
+            Complete Order
+          </button>
+        </form>
+      </div>
+      
+      <div id="step2" class="step hidden">
+        <div class="text-center">
+          <div class="text-green-500 text-5xl mb-4">✓</div>
+          <h2 class="text-2xl font-bold mb-4">Order Confirmed!</h2>
+          <p class="mb-4">Your silent clicks will be ready in moments.</p>
+          <p class="text-sm text-gray-600 mb-4">You will receive an invoice at the end of the month.</p>
+          <button onclick="closeModal()" class="bg-purple-600 text-white py-2 px-4 rounded hover:bg-purple-700">
+            Start Clicking Silently
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <style>
+  .modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 1000;
+  }
+  
+  .modal.show {
+    display: flex;
+  }
+  
+  .modal-content {
+    background: white;
+    padding: 2rem;
+    border-radius: 0.5rem;
+    max-width: 32rem;
+    width: 90%;
+    margin: 0 1rem;
+  }
+  
+  .hidden {
+    display: none;
+  }
+  
+  .step {
+    transition: all 0.3s ease;
+  }
+  
+  input {
+    width: 100%;
+    padding: 0.5rem;
+    border: 1px solid #ddd;
+    border-radius: 0.25rem;
+    margin-bottom: 1rem;
+  }
+  
+  button {
+    cursor: pointer;
+  }
+  </style>
+  
+  <script>
+  const plans = {
+    basic: {
+      name: "Ninja Trainee",
+      price: "12.99",
+      clicks: "12,000"
+    },
+    pro: {
+      name: "Stealth Master",
+      price: "19.99",
+      clicks: "25,000"
+    },
+    elite: {
+      name: "Silent Assassin",
+      price: "29.99",
+      clicks: "Unlimited"
+    }
+  };
+  
+  function openCheckout(planType) {
+    const modal = document.getElementById('checkoutModal');
+    const planName = document.getElementById('selectedPlan');
+    const planPrice = document.getElementById('selectedPrice');
+    
+    planName.textContent = plans[planType].name;
+    planPrice.textContent = plans[planType].price;
+    
+    modal.classList.add('show');
+  }
+  
+  function closeModal() {
+    const modal = document.getElementById('checkoutModal');
+    modal.classList.remove('show');
+    // Reset to step 1
+    document.getElementById('step1').classList.remove('hidden');
+    document.getElementById('step2').classList.add('hidden');
+  }
+  
+  document.getElementById('checkoutForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+    
+    // Hide step 1, show step 2
+    document.getElementById('step1').classList.add('hidden');
+    document.getElementById('step2').classList.remove('hidden');
+  });
+  
+  // Close modal when clicking outside
+  window.onclick = function(event) {
+    const modal = document.getElementById('checkoutModal');
+    if (event.target === modal) {
+      closeModal();
+    }
+  }
+  </script>
 </body>
 </html>
