@@ -349,86 +349,186 @@
 }
 </style>
 
-<!-- Funny Features Section -->
-<section class="py-16 bg-gray-50">
-    <div class="container">
-        <h2 class="text-3xl font-bold text-center mb-12">Not-So-Silent Features</h2>
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <div class="feature-card">
-                <div class="text-4xl mb-4 text-center">🐱</div>
-                <h3 class="text-xl font-semibold mb-2 text-center">Cat Mode</h3>
-                <p class="text-gray-600 text-center">Special frequency tuning that only cats can hear. Watch them look around confused while you click away.</p>
-            </div>
-            <div class="feature-card">
-                <div class="text-4xl mb-4 text-center">🌙</div>
-                <h3 class="text-xl font-semibold mb-2 text-center">Midnight Ninja Mode</h3>
-                <p class="text-gray-600 text-center">Extra quiet clicks between 2 AM and 6 AM. Because that's when you make your best gaming decisions, right?</p>
-            </div>
-            <div class="feature-card">
-                <div class="text-4xl mb-4 text-center">📊</div>
-                <h3 class="text-xl font-semibold mb-2 text-center">Rage Analytics</h3>
-                <p class="text-gray-600 text-center">Tracks your anger levels by measuring click intensity. Includes "Chill Pill" recommendations.</p>
-            </div>
-        </div>
-    </div>
-</section>
-
-<!-- Achievements Section -->
 <section class="py-16 bg-white">
-    <div class="container">
+    <div class="container mx-auto px-4">
         <h2 class="text-3xl font-bold text-center mb-12">Unlock Silent Achievements</h2>
-        <div class="grid grid-cols-1 md:grid-cols-4 gap-6 text-center">
-            <div class="p-4">
-                <div class="text-3xl mb-2">🤫</div>
-                <h3 class="font-semibold">Library Ninja</h3>
-                <p class="text-sm text-gray-600">1,000 clicks without waking up a single studying student</p>
-            </div>
-            <div class="p-4">
-                <div class="text-3xl mb-2">👶</div>
-                <h3 class="font-semibold">Baby Whisperer</h3>
-                <p class="text-sm text-gray-600">Complete a 4-hour gaming session during naptime</p>
-            </div>
-            <div class="p-4">
-                <div class="text-3xl mb-2">🐁</div>
-                <h3 class="font-semibold">Silent but Deadly</h3>
-                <p class="text-sm text-gray-600">50,000 clicks without a single noise complaint</p>
-            </div>
-            <div class="p-4">
-                <div class="text-3xl mb-2">🏆</div>
-                <h3 class="font-semibold">Stealth Master</h3>
-                <p class="text-sm text-gray-600">Your roommate thinks you're just staring at the screen</p>
-            </div>
-            <!-- Badge 1 -->
-            <div class="achievement text-center p-4">
-                <div class="text-3xl mb-2">🥷</div>
-                <h3 class="font-semibold">The Ghost Gamer</h3>
-                <p class="text-sm text-gray-600">Played for 8 hours straight. Family thinks you're meditating.</p>
-            </div>
+        
+        <!-- Achievement Category Tabs -->
+        <div class="flex justify-center gap-4 mb-8">
+            <button class="achievement-tab active flex flex-col items-center p-4 rounded-lg" data-tab="ninja">
+                <span class="text-2xl mb-2">🥷</span>
+                <span class="font-medium">Ninja Skills</span>
+            </button>
+            <button class="achievement-tab flex flex-col items-center p-4 rounded-lg" data-tab="social">
+                <span class="text-2xl mb-2">🤝</span>
+                <span class="font-medium">Social Stealth</span>
+            </button>
+            <button class="achievement-tab flex flex-col items-center p-4 rounded-lg" data-tab="legendary">
+                <span class="text-2xl mb-2">👑</span>
+                <span class="font-medium">Legendary</span>
+            </button>
+            <button class="achievement-tab flex flex-col items-center p-4 rounded-lg" data-tab="specialist">
+                <span class="text-2xl mb-2">🎯</span>
+                <span class="font-medium">Specialist</span>
+            </button>
+        </div>
 
-            <!-- Badge 2 -->
-            <div class="achievement text-center p-4">
-                <div class="text-3xl mb-2">🐱</div>
-                <h3 class="font-semibold">Cat Confusion Master</h3>
-                <p class="text-sm text-gray-600">Successfully bamboozled your cat 100 times with silent clicks.</p>
+        <!-- Ninja Skills Achievements -->
+        <div class="achievement-content active" id="ninja-content">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-6 text-center">
+                <div class="p-4">
+                    <div class="text-3xl mb-2">🤫</div>
+                    <h3 class="font-semibold">Library Ninja</h3>
+                    <p class="text-sm text-gray-600">1,000 clicks without waking up a single studying student</p>
+                </div>
+                <div class="p-4">
+                    <div class="text-3xl mb-2">🐁</div>
+                    <h3 class="font-semibold">Silent but Deadly</h3>
+                    <p class="text-sm text-gray-600">50,000 clicks without a single noise complaint</p>
+                </div>
+                <div class="p-4">
+                    <div class="text-3xl mb-2">👻</div>
+                    <h3 class="font-semibold">Ghost Protocol</h3>
+                    <p class="text-sm text-gray-600">Completed an entire game without being detected by anyone</p>
+                </div>
+                <div class="p-4">
+                    <div class="text-3xl mb-2">🌪️</div>
+                    <h3 class="font-semibold">Silent Storm</h3>
+                    <p class="text-sm text-gray-600">10,000 clicks in one hour, all in perfect silence</p>
+                </div>
             </div>
+        </div>
 
-            <!-- Badge 3 -->
-            <div class="achievement text-center p-4">
-                <div class="text-3xl mb-2">👔</div>
-                <h3 class="font-semibold">Meeting Multitasker</h3>
-                <p class="text-sm text-gray-600">Reached a new high score during a quarterly review.</p>
+        <!-- Social Stealth Achievements -->
+        <div class="achievement-content hidden" id="social-content">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-6 text-center">
+                <div class="p-4">
+                    <div class="text-3xl mb-2">👔</div>
+                    <h3 class="font-semibold">Meeting Multitasker</h3>
+                    <p class="text-sm text-gray-600">Reached a new high score during a quarterly review</p>
+                </div>
+                <div class="p-4">
+                    <div class="text-3xl mb-2">👶</div>
+                    <h3 class="font-semibold">Baby Whisperer</h3>
+                    <p class="text-sm text-gray-600">Complete a 4-hour gaming session during naptime</p>
+                </div>
+                <div class="p-4">
+                    <div class="text-3xl mb-2">📚</div>
+                    <h3 class="font-semibold">Study Hall Hero</h3>
+                    <p class="text-sm text-gray-600">Convinced everyone you're taking intensive study notes</p>
+                </div>
+                <div class="p-4">
+                    <div class="text-3xl mb-2">🎭</div>
+                    <h3 class="font-semibold">Master of Disguise</h3>
+                    <p class="text-sm text-gray-600">Successfully explained away your victory dance as stretching exercises</p>
+                </div>
             </div>
+        </div>
 
-            <!-- Badge 4 -->
-            <div class="achievement text-center p-4">
-                <div class="text-3xl mb-2">🌙</div>
-                <h3 class="font-semibold">3 AM Legend</h3>
-                <p class="text-sm text-gray-600">"Just one more game" turned into sunrise. Again.</p>
+        <!-- Legendary Achievements -->
+        <div class="achievement-content hidden" id="legendary-content">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-6 text-center">
+                <div class="p-4">
+                    <div class="text-3xl mb-2">🌙</div>
+                    <h3 class="font-semibold">3 AM Legend</h3>
+                    <p class="text-sm text-gray-600">"Just one more game" turned into sunrise. Again.</p>
+                </div>
+                <div class="p-4">
+                    <div class="text-3xl mb-2">🏆</div>
+                    <h3 class="font-semibold">Stealth Master</h3>
+                    <p class="text-sm text-gray-600">Your roommate thinks you're just staring at the screen</p>
+                </div>
+                <div class="p-4">
+                    <div class="text-3xl mb-2">🥷</div>
+                    <h3 class="font-semibold">The Ghost Gamer</h3>
+                    <p class="text-sm text-gray-600">Played for 8 hours straight. Family thinks you're meditating.</p>
+                </div>
+                <div class="p-4">
+                    <div class="text-3xl mb-2">⭐</div>
+                    <h3 class="font-semibold">Silent Prodigy</h3>
+                    <p class="text-sm text-gray-600">Achieved all basic stealth achievements in one week</p>
+                </div>
             </div>
+        </div>
 
+        <!-- Specialist Achievements -->
+        <div class="achievement-content hidden" id="specialist-content">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-6 text-center">
+                <div class="p-4">
+                    <div class="text-3xl mb-2">🐱</div>
+                    <h3 class="font-semibold">Cat Confusion Master</h3>
+                    <p class="text-sm text-gray-600">Successfully bamboozled your cat 100 times with silent clicks</p>
+                </div>
+                <div class="p-4">
+                    <div class="text-3xl mb-2">🎧</div>
+                    <h3 class="font-semibold">ASMR Artisan</h3>
+                    <p class="text-sm text-gray-600">Your clicking is so quiet, it's being used in sleep meditation videos</p>
+                </div>
+                <div class="p-4">
+                    <div class="text-3xl mb-2">🎮</div>
+                    <h3 class="font-semibold">Stealth Streamer</h3>
+                    <p class="text-sm text-gray-600">Completed a full stream without anyone hearing your clicks</p>
+                </div>
+                <div class="p-4">
+                    <div class="text-3xl mb-2">🌟</div>
+                    <h3 class="font-semibold">Silent Savant</h3>
+                    <p class="text-sm text-gray-600">Created your own unique silent clicking technique</p>
+                </div>
+            </div>
         </div>
     </div>
 </section>
+
+<style>
+.achievement-tab {
+    background-color: #f3f4f6;
+    transition: all 0.3s ease;
+    min-width: 120px;
+}
+
+.achievement-tab.active {
+    background-color: #7c3aed;
+    color: white;
+}
+
+.achievement-content {
+    display: none;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.achievement-content.active {
+    display: grid;
+    opacity: 1;
+}
+
+.achievement-tab:hover {
+    transform: translateY(-2px);
+}
+</style>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const tabs = document.querySelectorAll('.achievement-tab');
+    
+    tabs.forEach(tab => {
+        tab.addEventListener('click', () => {
+            tabs.forEach(t => t.classList.remove('active'));
+            tab.classList.add('active');
+            
+            document.querySelectorAll('.achievement-content').forEach(content => {
+                content.classList.remove('active');
+                content.classList.add('hidden');
+            });
+            
+            const contentId = `${tab.dataset.tab}-content`;
+            const content = document.getElementById(contentId);
+            content.classList.remove('hidden');
+            content.classList.add('active');
+        });
+    });
+});
+</script>
 
 <!-- Testimonials -->
 <section class="py-16 bg-purple-50">
