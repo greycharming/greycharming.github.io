@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SilentClick™ - Revolutionary Silent Mouse Subscription</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css">
+    <style>
+        /* All our custom CSS from before goes here */
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            line-height: 1.6;
+            color: #1F2937;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1rem;
+        }
+
+        .nav {
+            background: white;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 70px;
+        }
+
+        .nav-logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #7C3AED;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        .nav-link {
+            color: #4B5563;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+            cursor: pointer;
+        }
+
+        .nav-link:hover {
+            color: #7C3AED;
+        }
+
+        .btn {
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.375rem;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            border: none;
+            outline: none;
+        }
+
+        .btn-primary {
+            background: #7C3AED;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #6D28D9;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 6px rgba(124, 58, 237, 0.2);
+        }
+
+        .hero {
+            background: linear-gradient(135deg, #7C3AED, #5B21B6);
+            padding: 8rem 0 4rem;
+            color: white;
+            text-align: center;
+        }
+
+        .features {
+            padding: 5rem 0;
+            background: #F9FAFB;
+        }
+
+        .feature-card {
+            padding: 2rem;
+            background: white;
+            border-radius: 0.5rem;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .pricing {
+            padding: 5rem 0;
+            background: white;
+        }
+
+        .price-card {
+            padding: 2rem;
+            background: white;
+            border-radius: 0.5rem;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+            position: relative;
+            height: 100%;
+        }
+
+        .price-card.popular {
+            border: 2px solid #7C3AED;
+            transform: scale(1.05);
+        }
+
+        .price-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .price-card.popular:hover {
+            transform: scale(1.05) translateY(-5px);
+        }
+
+        .popular-badge {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: #7C3AED;
+            color: white;
+            padding: 0.25rem 1rem;
+            border-radius: 9999px;
+            font-size: 0.875rem;
+        }
+
+        .check-list {
+            list-style: none;
+        }
+
+        .check-list li {
+            display: flex;
+            align-items: center;
+            margin-bottom: 0.75rem;
+        }
+
+        .check-list li::before {
+            content: "✓";
+            color: #10B981;
+            margin-right: 0.5rem;
+            font-weight: bold;
+        }
+
+        .cta {
+            background: linear-gradient(135deg, #7C3AED, #5B21B6);
+            padding: 4rem 0;
+            color: white;
+            text-align: center;
+        }
+
+        .footer {
+            background: #1F2937;
+            color: white;
+            padding: 3rem 0;
+            text-align: center;
+        }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+            
+            .price-card.popular {
+                transform: scale(1);
+            }
+            
+            .price-card.popular:hover {
+                transform: translateY(-5px);
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="nav">
+        <div class="container nav-container">
+            <div class="nav-logo">🤫 SilentClick™</div>
+            <div class="nav-links">
+                <a href="#features" class="nav-link">Features</a>
+                <a href="#pricing" class="nav-link">Pricing</a>
+                <a href="#faq" class="nav-link">FAQ</a>
+                <button class="btn btn-primary">Get Started</button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <h1 class="text-4xl md:text-6xl font-bold mb-4">Your Mouse Just Got a Silencer</h1>
+            <p class="text-xl mb-8 opacity-90">Because nobody needs to hear you rage-clicking at 3 AM</p>
+            <button class="btn btn-primary">Start Your Silent Journey</button>
+        </div>
+    </section>
+
+    <!-- Features -->
+    <section id="features" class="features">
+        <div class="container">
+            <h2 class="text-3xl font-bold text-center mb-12">Why Choose Silent Click?</h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="feature-card">
+                    <div class="text-4xl mb-4 text-center">🤫</div>
+                    <h3 class="text-xl font-semibold mb-2 text-center">Ultra-Silent Technology</h3>
+                    <p class="text-gray-600 text-center">Experience gaming without disturbing anyone around you.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="text-4xl mb-4 text-center">📊</div>
+                    <h3 class="text-xl font-semibold mb-2 text-center">Click Analytics</h3>
+                    <p class="text-gray-600 text-center">Track your usage and optimize your silent clicking habits.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="text-4xl mb-4 text-center">⚡</div>
+                    <h3 class="text-xl font-semibold mb-2 text-center">Lightning Fast</h3>
+                    <p class="text-gray-600 text-center">Zero latency. Just pure, silent performance.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pricing -->
+    <section id="pricing" class="pricing">
+        <div class="container">
+            <h2 class="text-3xl font-bold text-center mb-12">Choose Your Silence Level</h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- Basic Plan -->
+                <div class="price-card">
+                    <h3 class="text-2xl font-bold mb-4">Ninja Trainee</h3>
+                    <div class="text-purple-600 text-4xl font-bold mb-6">$12.99<span class="text-lg">/mo</span></div>
+                    <ul class="check-list mb-8">
+                        <li>12,000 silent clicks</li>
+                        <li>Basic stealth support</li>
+                        <li>Click tracking</li>
+                    </ul>
+                    <button class="btn btn-primary w-full">Choose Basic</button>
+                </div>
+
+                <!-- Pro Plan -->
+                <div class="price-card popular">
+                    <span class="popular-badge">Most Popular</span>
+                    <h3 class="text-2xl font-bold mb-4">Stealth Master</h3>
+                    <div class="text-purple-600 text-4xl font-bold mb-6">$19.99<span class="text-lg">/mo</span></div>
+                    <ul class="check-list mb-8">
+                        <li>25,000 silent clicks</li>
+                        <li>Priority ninja support</li>
+                        <li>Advanced analytics</li>
+                        <li>Click meditation sessions</li>
+                    </ul>
+                    <button class="btn btn-primary w-full">Choose Pro</button>
+                </div>
+
+                <!-- Elite Plan -->
+                <div class="price-card">
+                    <h3 class="text-2xl font-bold mb-4">Silent Assassin</h3>
+                    <div class="text-purple-600 text-4xl font-bold mb-6">$29.99<span class="text-lg">/mo</span></div>
+                    <ul class="check-list mb-8">
+                        <li>Unlimited silent clicks</li>
+                        <li>24/7 stealth support</li>
+                        <li>Premium analytics</li>
+                        <li>Click meditation sessions</li>
+                        <li>Custom silence profiles</li>
+                    </ul>
+                    <button class="btn btn-primary w-full">Choose Elite</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+<!-- Funny Features Section -->
+<section class="py-16 bg-gray-50">
+    <div class="container">
+        <h2 class="text-3xl font-bold text-center mb-12">Not-So-Silent Features</h2>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div class="feature-card">
+                <div class="text-4xl mb-4 text-center">🐱</div>
+                <h3 class="text-xl font-semibold mb-2 text-center">Cat Mode</h3>
+                <p class="text-gray-600 text-center">Special frequency tuning that only cats can hear. Watch them look around confused while you click away.</p>
+            </div>
+            <div class="feature-card">
+                <div class="text-4xl mb-4 text-center">🌙</div>
+                <h3 class="text-xl font-semibold mb-2 text-center">Midnight Ninja Mode</h3>
+                <p class="text-gray-600 text-center">Extra quiet clicks between 2 AM and 6 AM. Because that's when you make your best gaming decisions, right?</p>
+            </div>
+            <div class="feature-card">
+                <div class="text-4xl mb-4 text-center">📊</div>
+                <h3 class="text-xl font-semibold mb-2 text-center">Rage Analytics</h3>
+                <p class="text-gray-600 text-center">Tracks your anger levels by measuring click intensity. Includes "Chill Pill" recommendations.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Achievements Section -->
+<section class="py-16 bg-white">
+    <div class="container">
+        <h2 class="text-3xl font-bold text-center mb-12">Unlock Silent Achievements</h2>
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-6 text-center">
+            <div class="p-4">
+                <div class="text-3xl mb-2">🤫</div>
+                <h3 class="font-semibold">Library Ninja</h3>
+                <p class="text-sm text-gray-600">1,000 clicks without waking up a single studying student</p>
+            </div>
+            <div class="p-4">
+                <div class="text-3xl mb-2">👶</div>
+                <h3 class="font-semibold">Baby Whisperer</h3>
+                <p class="text-sm text-gray-600">Complete a 4-hour gaming session during naptime</p>
+            </div>
+            <div class="p-4">
+                <div class="text-3xl mb-2">🐁</div>
+                <h3 class="font-semibold">Silent but Deadly</h3>
+                <p class="text-sm text-gray-600">50,000 clicks without a single noise complaint</p>
+            </div>
+            <div class="p-4">
+                <div class="text-3xl mb-2">🏆</div>
+                <h3 class="font-semibold">Stealth Master</h3>
+                <p class="text-sm text-gray-600">Your roommate thinks you're just staring at the screen</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Testimonials -->
+<section class="py-16 bg-purple-50">
+    <div class="container">
+        <h2 class="text-3xl font-bold text-center mb-12">Suspiciously Specific Reviews</h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <div class="feature-card">
+                <div class="flex items-start mb-4">
+                    <div class="text-4xl">🎮</div>
+                    <div class="ml-4">
+                        <h3 class="font-semibold">Dave "The Night Raider" Johnson</h3>
+                        <div class="text-yellow-400">★★★★★</div>
+                    </div>
+                </div>
+                <p class="text-gray-600">"My wife used to throw pillows at me for late-night gaming. Now she throws them because she can't find me. Progress! 10/10 would sneak again."</p>
+            </div>
+
+            <div class="feature-card">
+                <div class="flex items-start mb-4">
+                    <div class="text-4xl">📚</div>
+                    <div class="ml-4">
+                        <h3 class="font-semibold">Sarah "Library Lurker" Smith</h3>
+                        <div class="text-yellow-400">★★★★★</div>
+                    </div>
+                </div>
+                <p class="text-gray-600">"I can finally play Cookie Clicker in the library without getting death stares. Though people are concerned about my aggressive silent finger movements."</p>
+            </div>
+
+            <div class="feature-card">
+                <div class="flex items-start mb-4">
+                    <div class="text-4xl">👔</div>
+                    <div class="ml-4">
+                        <h3 class="font-semibold">Mike "Meeting Multitasker" Wilson</h3>
+                        <div class="text-yellow-400">★★★★½</div>
+                    </div>
+                </div>
+                <p class="text-gray-600">"Finally reached Diamond rank during quarterly budget meetings. My boss thinks I'm taking very detailed notes. Lost half star because my victory dance gave me away."</p>
+            </div>
+
+            <div class="feature-card">
+                <div class="flex items-start mb-4">
+                    <div class="text-4xl">🐱</div>
+                    <div class="ml-4">
+                        <h3 class="font-semibold">Mr. Whiskers</h3>
+                        <div class="text-yellow-400">★★★★★</div>
+                    </div>
+                </div>
+                <p class="text-gray-600">"Meow meow meow (My human finally stopped waking me up with their clicking. Now I have to find new reasons to knock things off the desk.)"</p>
+            </div>
+
+            <div class="feature-card">
+                <div class="flex items-start mb-4">
+                    <div class="text-4xl">🎧</div>
+                    <div class="ml-4">
+                        <h3 class="font-semibold">Alex "Streamer Dreams" Thompson</h3>
+                        <div class="text-yellow-400">★★★★★</div>
+                    </div>
+                </div>
+                <p class="text-gray-600">"My ASMR gaming stream is finally possible! Although viewers keep asking if my mouse is broken because they can't hear me clicking."</p>
+            </div>
+
+            <div class="feature-card">
+                <div class="flex items-start mb-4">
+                    <div class="text-4xl">👶</div>
+                    <div class="ml-4">
+                        <h3 class="font-semibold">Parent of 3</h3>
+                        <div class="text-yellow-400">★★★★★</div>
+                    </div>
+                </div>
+                <p class="text-gray-600">"Finally beat Elden Ring during naptime! Though I had to explain to my spouse why I was silently rage-crying in the gaming room."</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Silent Click Counter -->
+<section class="py-16 bg-gradient-to-r from-purple-600 to-indigo-600 text-white">
+    <div class="container text-center">
+        <h2 class="text-3xl font-bold mb-8">The Silent Revolution</h2>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div>
+                <div class="text-4xl font-bold mb-2">1,234,567,890</div>
+                <p>Clicks Silenced</p>
+            </div>
+            <div>
+                <div class="text-4xl font-bold mb-2">42,069</div>
+                <p>Relationships Saved</p>
+            </div>
+            <div>
+                <div class="text-4xl font-bold mb-2">∞</div>
+                <p>Happy Cats</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Not-So-Silent Disclaimer -->
+<section class="py-8 bg-gray-100">
+    <div class="container">
+        <div class="text-center text-sm text-gray-600">
+            <p class="mb-2">* Results may vary. Side effects may include:</p>
+            <p>Suspicious looks from family members, unexplained ninja-like reflexes,</p>
+            <p>and a strange urge to shush loud mouse users in public.</p>
+        </div>
+    </div>
+</section>
+
+    <!-- FAQ -->
+    <section id="faq" class="py-16">
+        <div class="container">
+            <h2 class="text-3xl font-bold text-center mb-12">Frequently Asked Questions</h2>
+            <div class="max-w-3xl mx-auto space-y-8">
+                <div class="feature-card">
+                    <h3 class="text-xl font-semibold mb-2">How does the click counting work?</h3>
+                    <p class="text-gray-600">Our advanced software tracks your mouse clicks in real-time, ensuring accurate usage monitoring without impacting performance.</p>
+                </div>
+                <div class="feature-card">
+                    <h3 class="text-xl font-semibold mb-2">What happens if I run out of silent clicks?</h3>
+                    <p class="text-gray-600">Your mouse won't suddenly start screaming, but it will lose its ninja powers. We'll warn you when you're running low on silence.</p>
+                </div>
+                <div class="feature-card">
+                    <h3 class="text-xl font-semibold mb-2">Can I transfer unused clicks to next month?</h3>
+                    <p class="text-gray-600">Silence is golden, but it doesn't roll over. Use them or lose them! Think of it as motivation to click more (quietly).</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="cta">
+        <div class="container">
+            <h2 class="text-3xl font-bold mb-4">Ready to Embrace the Silence?</h2>
+            <p class="text-xl mb-8">Join thousands of satisfied ninjas who've made the switch to silent clicking.</p>
+            <button class="btn btn-primary">Start Your Silent Journey</button>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p class="mb-4">SilentClick™ - Making the World a Quieter Place, One Click at a Time</p>
+            <p class="text-sm opacity-75">© 2024 SilentClick. All rights silently reserved.</p>
+        </div>
+    </footer>
+</body>
+</html>
