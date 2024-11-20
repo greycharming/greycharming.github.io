@@ -1,0 +1,427 @@
+/* tools.css */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+/* Base Styles */
+body {
+    font-family: 'Inter', sans-serif;
+    background-color: #f3f4f6;
+    color: #1F2937;
+}
+
+/* Tool Card Base Styles */
+.tool-card {
+    background: white;
+    border-radius: 1rem;
+    box-shadow: 0 4px 6px rgba(124, 58, 237, 0.1);
+    margin-bottom: 2rem;
+    overflow: hidden;
+    border: 2px solid rgba(124, 58, 237, 0.1);
+}
+
+/* Tool Headers */
+.tool-header {
+    background: linear-gradient(135deg, #7C3AED, #5B21B6);
+    color: white;
+    padding: 1.5rem;
+    position: relative;
+    overflow: hidden;
+}
+
+/* Click Risk Calculator Styles */
+.risk-calculator {
+    padding: 1.5rem;
+}
+
+.risk-form-group {
+    margin-bottom: 1.5rem;
+}
+
+.risk-select {
+    width: 100%;
+    padding: 0.75rem;
+    border-radius: 0.5rem;
+    border: 2px solid #e5e7eb;
+    background-color: white;
+    transition: all 0.3s ease;
+}
+
+.risk-select:focus {
+    border-color: #7C3AED;
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(124, 58, 237, 0.1);
+}
+
+.checkbox-group {
+    display: flex;
+    align-items: center;
+    padding: 0.5rem;
+    transition: background-color 0.3s ease;
+    border-radius: 0.5rem;
+}
+
+.checkbox-group:hover {
+    background-color: #f3f4f6;
+}
+
+.checkbox-label {
+    margin-left: 0.75rem;
+    cursor: pointer;
+}
+
+/* Rage Meter Styles */
+.rage-meter {
+    height: 1rem;
+    background: #e5e7eb;
+    border-radius: 9999px;
+    overflow: hidden;
+    margin: 0.5rem 0;
+}
+
+.rage-fill {
+    height: 100%;
+    background: linear-gradient(to right, #10B981, #EF4444);
+    transition: width 0.3s ease;
+}
+
+/* Result Containers */
+.result-container {
+    background: linear-gradient(to right, #F3E8FF, #EDE9FE);
+    border-radius: 0.75rem;
+    padding: 1.5rem;
+    margin-top: 1.5rem;
+    border: 2px solid rgba(124, 58, 237, 0.1);
+}
+
+/* Buttons */
+.tool-button {
+    background: #7C3AED;
+    color: white;
+    padding: 0.75rem 1.5rem;
+    border-radius: 0.5rem;
+    border: none;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    width: 100%;
+    text-align: center;
+}
+
+.tool-button:hover {
+    background: #6D28D9;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 6px rgba(124, 58, 237, 0.2);
+}
+
+/* Animations */
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.slide-in {
+    animation: slideDown 0.3s ease-out;
+}
+
+/* Progress Bars */
+.progress-bar {
+    height: 0.5rem;
+    background: #e5e7eb;
+    border-radius: 9999px;
+    overflow: hidden;
+}
+
+.progress-fill {
+    height: 100%;
+    transition: width 0.3s ease;
+}
+
+/* Success Rate Indicator */
+.success-rate {
+    display: flex;
+    align-items: center;
+    margin-top: 1rem;
+    padding: 0.75rem;
+    background: #f3f4f6;
+    border-radius: 0.5rem;
+}
+
+.success-bar {
+    flex-grow: 1;
+    height: 0.5rem;
+    background: #e5e7eb;
+    border-radius: 9999px;
+    margin: 0 0.75rem;
+    overflow: hidden;
+}
+
+/* Tips and Recommendations */
+.tip-container {
+    background: #f9fafb;
+    border-radius: 0.5rem;
+    padding: 1rem;
+    margin-top: 1rem;
+}
+
+.tip-icon {
+    font-size: 1.25rem;
+    margin-right: 0.5rem;
+}
+
+/* History Section */
+.history-section {
+    margin-top: 1.5rem;
+    border-top: 2px solid #e5e7eb;
+    padding-top: 1.5rem;
+}
+
+.history-item {
+    padding: 0.75rem;
+    background: #f9fafb;
+    border-radius: 0.5rem;
+    margin-bottom: 0.5rem;
+}
+
+/* Emergency Mode Styles */
+.emergency-mode {
+    background: #FEE2E2;
+    color: #991B1B;
+    padding: 0.75rem;
+    border-radius: 0.5rem;
+    margin-top: 1rem;
+    display: none;
+}
+
+.emergency-mode.active {
+    display: block;
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0%, 100% { 
+        transform: scale(1); 
+        opacity: 1;
+    }
+    50% { 
+        transform: scale(1.02); 
+        opacity: 0.9;
+    }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .tool-card {
+        margin: 1rem;
+    }
+    
+    .checkbox-group {
+        padding: 0.75rem;
+    }
+    
+    .tool-header {
+        padding: 1rem;
+    }
+}
+
+/* Custom Checkboxes */
+input[type="checkbox"] {
+    appearance: none;
+    -webkit-appearance: none;
+    width: 1.25rem;
+    height: 1.25rem;
+    border: 2px solid #7C3AED;
+    border-radius: 0.25rem;
+    cursor: pointer;
+    position: relative;
+    transition: all 0.2s ease;
+}
+
+input[type="checkbox"]:checked {
+    background-color: #7C3AED;
+}
+
+input[type="checkbox"]:checked::after {
+    content: '✓';
+    position: absolute;
+    color: white;
+    font-size: 0.875rem;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+/* Sliders */
+input[type="range"] {
+    -webkit-appearance: none;
+    width: 100%;
+    height: 0.5rem;
+    border-radius: 9999px;
+    background: #e5e7eb;
+    outline: none;
+}
+
+input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 1.25rem;
+    height: 1.25rem;
+    border-radius: 50%;
+    background: #7C3AED;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+input[type="range"]::-webkit-slider-thumb:hover {
+    transform: scale(1.1);
+}
+
+/* Select Dropdowns */
+select {
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%236B7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e");
+    background-position: right 0.5rem center;
+    background-repeat: no-repeat;
+    background-size: 1.5em 1.5em;
+    padding-right: 2.5rem;
+}
+
+
+/* tools.css */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+/* Base Styles */
+body {
+    font-family: 'Inter', sans-serif;
+    background-color: #f3f4f6;
+    color: #1F2937;
+}
+
+/* Tool Card Base Styles */
+.tool-card {
+    cursor: pointer;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.tool-card:hover {
+    transform: translateY(-4px);
+}
+
+/* Tool Headers */
+.tool-header {
+    background: linear-gradient(135deg, #7C3AED, #5B21B6);
+    color: white;
+    padding: 1.5rem;
+    position: relative;
+    overflow: hidden;
+}
+
+.tool-header h3 {
+    margin-bottom: 0.5rem;
+}
+
+/* tools.css */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+/* Base Styles */
+body {
+    font-family: 'Inter', sans-serif;
+    background-color: #f3f4f6;
+    color: #1F2937;
+}
+
+/* Tool Card Base Styles */
+.tool-card {
+    cursor: pointer;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.tool-card:hover {
+    transform: translateY(-4px);
+}
+
+/* Tool Headers */
+.tool-card button {
+    background: linear-gradient(135deg, #7C3AED, #5B21B6);
+    color: white;
+    padding: 1.5rem;
+    position: relative;
+    overflow: hidden;
+}
+
+.tool-card button h3 {
+    margin-bottom: 0.5rem;
+}
+
+/* Rage Excuse Generator Content */
+#rage-excuse-generator-content {
+    background: linear-gradient(135deg, #7C3AED, #5B21B6);
+    color: white;
+    padding: 1.5rem;
+    position: relative;
+    overflow: hidden;
+}
+
+/* Floating Icons Animation */
+.floating-icons {
+    z-index: 0;
+}
+
+.floating-icons .icon {
+    position: absolute;
+    font-size: 2rem;
+    opacity: 0.1;
+    animation: float 15s infinite linear;
+}
+
+@keyframes float {
+    0% {
+        transform: translate(0, 0) rotate(0deg);
+        opacity: 0;
+    }
+    50% {
+        opacity: 0.1;
+    }
+    100% {
+        transform: translate(var(--translate-x, 100px), var(--translate-y, 100px)) rotate(360deg);
+        opacity: 0;
+    }
+}
+
+/* Sparkle Background */
+.sparkle-background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    overflow: hidden;
+    z-index: 0;
+}
+
+.sparkle {
+    position: absolute;
+    width: 4px;
+    height: 4px;
+    background: white;
+    border-radius: 50%;
+    opacity: 0;
+    animation: sparkle 2s infinite linear;
+}
+
+@keyframes sparkle {
+    0% {
+        transform: translate(0, 0) scale(0);
+        opacity: 0;
+    }
+    50% {
+        opacity: 0.5;
+    }
+    100% {
+        transform: translate(var(--translate-x, 50px), var(--translate-y, 50px)) scale(1);
+        opacity: 0;
+    }
+}
