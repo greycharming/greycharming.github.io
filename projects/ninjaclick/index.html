@@ -839,17 +839,17 @@
 <script>
     document.addEventListener('DOMContentLoaded', function() {
         const tabContainer = document.querySelector('.achievement-tabs');
-        const tabsInner = document.getElementById('tabsContainer');
         const tabs = document.querySelectorAll('.achievement-tab');
         const leftIndicator = document.querySelector('.scroll-indicator.left');
         const rightIndicator = document.querySelector('.scroll-indicator.right');
         
-        let isScrolling = false;
         let isMouseOver = false;
-        let scrollInterval;
         let isDown = false;
+        let scrollInterval;
         let startX;
         let scrollLeft;
+        const SCROLL_SPEED = 1; // Pixels per tick
+        const SCROLL_INTERVAL = 30; // Milliseconds between ticks
     
         function updateIndicators() {
             const scrollPosition = tabContainer.scrollLeft;
@@ -866,18 +866,19 @@
         }
     
         function startAutoScroll() {
-            if (!isMouseOver && !isDown) {
-                scrollInterval = setInterval(() => {
-                    if (!isMouseOver && !isDown) {
-                        if (tabContainer.scrollLeft >= (tabContainer.scrollWidth / 2) - 20) {
-                            tabContainer.scrollLeft = 0;
-                        } else {
-                            tabContainer.scrollLeft += 1;
-                        }
-                        updateIndicators();
+            // Clear any existing interval first
+            clearInterval(scrollInterval);
+            
+            scrollInterval = setInterval(() => {
+                if (!isMouseOver && !isDown) {
+                    if (tabContainer.scrollLeft >= (tabContainer.scrollWidth / 2) - 20) {
+                        tabContainer.scrollLeft = 0;
+                    } else {
+                        tabContainer.scrollLeft += SCROLL_SPEED;
                     }
-                }, 30);
-            }
+                    updateIndicators();
+                }
+            }, SCROLL_INTERVAL);
         }
     
         // Initialize auto-scroll
@@ -896,11 +897,43 @@
             }
         });
     
+        // Tab click handling
+        tabs.forEach(tab => {
+            tab.addEventListener('click', (e) => {
+                // Stop propagation to prevent other handlers
+                e.stopPropagation();
+                
+                if (!tabContainer.classList.contains('dragging')) {
+                    // Remove active class from all tabs
+                    tabs.forEach(t => t.classList.remove('active'));
+                    
+                    // Add active class to clicked tab and its clone
+                    const tabType = tab.getAttribute('data-tab');
+                    document.querySelectorAll(`.achievement-tab[data-tab="${tabType}"]`).forEach(t => {
+                        t.classList.add('active');
+                    });
+    
+                    // Update content visibility
+                    document.querySelectorAll('.achievement-content').forEach(content => {
+                        content.classList.remove('active');
+                        content.classList.add('hidden');
+                    });
+    
+                    const contentId = `${tabType}-content`;
+                    const content = document.getElementById(contentId);
+                    if (content) {
+                        content.classList.remove('hidden');
+                        content.classList.add('active');
+                    }
+                }
+            });
+        });
+    
         // Scroll Indicators click events
         leftIndicator.addEventListener('click', () => {
             clearInterval(scrollInterval);
             tabContainer.scrollBy({
-                left: -100,
+                left: -300,
                 behavior: 'smooth'
             });
             setTimeout(startAutoScroll, 1000);
@@ -909,7 +942,7 @@
         rightIndicator.addEventListener('click', () => {
             clearInterval(scrollInterval);
             tabContainer.scrollBy({
-                left: 100,
+                left: 300,
                 behavior: 'smooth'
             });
             setTimeout(startAutoScroll, 1000);
@@ -924,15 +957,7 @@
             clearInterval(scrollInterval);
         });
     
-        tabContainer.addEventListener('mouseleave', () => {
-            isDown = false;
-            tabContainer.classList.remove('dragging');
-            if (!isMouseOver) {
-                startAutoScroll();
-            }
-        });
-    
-        tabContainer.addEventListener('mouseup', () => {
+        window.addEventListener('mouseup', () => {
             isDown = false;
             tabContainer.classList.remove('dragging');
             if (!isMouseOver) {
@@ -972,7 +997,7 @@
             updateIndicators();
         });
     
-        // Scroll event listener for updating indicators
+        // Scroll event listener
         tabContainer.addEventListener('scroll', () => {
             updateIndicators();
             resetScroll();
@@ -982,10 +1007,929 @@
         updateIndicators();
     });
     </script>
+<!-- Achievement Section END -->
+
+<!-- Click Risk Calculator START -->
+<section class="py-6 bg-white">
+    <div class="container mx-auto px-4">
+        <div class="max-w-2xl mx-auto border-2 border-purple-200 rounded-lg shadow-lg">
+            <!-- Collapsible Header -->
+            <button onclick="toggleCalculator()" class="w-full flex items-center justify-between bg-gradient-to-r from-purple-600 to-purple-700 text-white p-6 rounded-t-lg hover:from-purple-700 hover:to-purple-800 transition-all group">
+                <div class="flex items-center space-x-4">
+                    <div class="text-2xl">🎯</div>
+                    <div class="text-left">
+                        <h3 class="text-xl font-bold">Click Risk Calculator</h3>
+                        <p class="text-sm text-purple-200">Calculate your stealth gaming risk level</p>
+                    </div>
+                </div>
+                
+                <div class="flex items-center space-x-2">
+                    <span class="text-sm text-purple-200 group-hover:text-white">Click to expand</span>
+                    <svg id="calculatorArrow" class="w-6 h-6 transform transition-transform group-hover:translate-y-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                    </svg>
+                </div>
+            </button>
+
+            <!-- Calculator Content -->
+            <div id="calculatorContent" class="hidden">
+                <div class="p-8 bg-white rounded-b-lg border-t border-purple-100">
+                    <div class="space-y-6">
+                        <!-- Time of Day -->
+                        <div class="bg-gray-50 p-4 rounded-lg">
+                            <label class="block text-sm font-medium mb-2 text-gray-700">Time of Day</label>
+                            <select id="timeOfDay" class="w-full p-2 rounded-lg border-2 border-purple-100 focus:border-purple-500 focus:ring focus:ring-purple-200 transition-all" onchange="calculateRisk()">
+                                <option value="1">Morning (Safe Zone)</option>
+                                <option value="2">Afternoon (Moderate Risk)</option>
+                                <option value="3">Evening (Risky)</option>
+                                <option value="4">3 AM (Danger Zone)</option>
+                            </select>
+                        </div>
+                        
+                        <!-- Nearby Threats -->
+                        <div class="bg-gray-50 p-4 rounded-lg">
+                            <label class="block text-sm font-medium mb-3 text-gray-700">Nearby Threats</label>
+                            <div class="space-y-3">
+                                <label class="flex items-center space-x-3 p-2 hover:bg-gray-100 rounded-lg cursor-pointer transition-colors">
+                                    <input type="checkbox" class="threat-checkbox" data-threat="roommate" onchange="calculateRisk()">
+                                    <span>Sleeping Roommate</span>
+                                </label>
+                                <label class="flex items-center space-x-3 p-2 hover:bg-gray-100 rounded-lg cursor-pointer transition-colors">
+                                    <input type="checkbox" class="threat-checkbox" data-threat="cat" onchange="calculateRisk()">
+                                    <span>Suspicious Cat</span>
+                                </label>
+                                <label class="flex items-center space-x-3 p-2 hover:bg-gray-100 rounded-lg cursor-pointer transition-colors">
+                                    <input type="checkbox" class="threat-checkbox" data-threat="lightSleeper" onchange="calculateRisk()">
+                                    <span>Light Sleeper Nearby</span>
+                                </label>
+                                <label class="flex items-center space-x-3 p-2 hover:bg-gray-100 rounded-lg cursor-pointer transition-colors">
+                                    <input type="checkbox" class="threat-checkbox" data-threat="parents" onchange="calculateRisk()">
+                                    <span>Parents Home</span>
+                                </label>
+                                <label class="flex items-center space-x-3 p-2 hover:bg-gray-100 rounded-lg cursor-pointer transition-colors">
+                                    <input type="checkbox" class="threat-checkbox" data-threat="creaky" onchange="calculateRisk()">
+                                    <span>Creaky Floor Boards</span>
+                                </label>
+                                <label class="flex items-center space-x-3 p-2 hover:bg-gray-100 rounded-lg cursor-pointer transition-colors">
+                                    <input type="checkbox" class="threat-checkbox" data-threat="headphones" onchange="calculateRisk()">
+                                    <span>Noise-Canceling Headphones (Broken)</span>
+                                </label>
+                                <label class="flex items-center space-x-3 p-2 hover:bg-gray-100 rounded-lg cursor-pointer transition-colors">
+                                    <input type="checkbox" class="threat-checkbox" data-threat="mechanical" onchange="calculateRisk()">
+                                    <span>Mechanical Keyboard User Nearby</span>
+                                </label>
+                                <label class="flex items-center space-x-3 p-2 hover:bg-gray-100 rounded-lg cursor-pointer transition-colors">
+                                    <input type="checkbox" class="threat-checkbox" data-threat="discord" onchange="calculateRisk()">
+                                    <span>Discord Notifications Unmuted</span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <!-- Gaming Intensity -->
+                        <div class="bg-gray-50 p-4 rounded-lg">
+                            <label class="block text-sm font-medium mb-2 text-gray-700">Gaming Intensity</label>
+                            <input type="range" id="intensity" min="1" max="10" class="w-full accent-purple-600" oninput="calculateRisk()">
+                            <div class="flex justify-between text-xs text-gray-500 mt-1">
+                                <span>Casual</span>
+                                <span>Rage Mode</span>
+                            </div>
+                        </div>
+
+                        <!-- Risk Result -->
+                        <div id="riskResult" class="hidden mt-6 p-6 bg-gradient-to-r from-purple-50 to-purple-100 rounded-lg text-center border-2 border-purple-200">
+                            <h3 class="text-xl font-bold mb-3">Risk Assessment</h3>
+                            <div id="riskLevel" class="text-lg mb-3 font-semibold"></div>
+                            <div id="recommendation" class="text-sm text-gray-600"></div>
+                            <div id="threatCombo" class="mt-4 text-sm font-medium text-purple-600"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<style>
+.threat-checkbox {
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    width: 1.25rem;
+    height: 1.25rem;
+    border: 2px solid #9ca3af;
+    border-radius: 0.25rem;
+    outline: none;
+    cursor: pointer;
+    position: relative;
+    transition: all 0.2s ease;
+}
+
+.threat-checkbox:checked {
+    background-color: rgb(124 58 237);
+    border-color: rgb(124 58 237);
+}
+
+.threat-checkbox:checked::after {
+    content: '✓';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: white;
+    font-size: 0.875rem;
+}
+
+#calculatorContent {
+    transition: all 0.3s ease-in-out;
+}
+
+@keyframes gentle-pulse {
+    0% { opacity: 0.7; }
+    50% { opacity: 1; }
+    100% { opacity: 0.7; }
+}
+
+.header-pulse {
+    animation: gentle-pulse 2s infinite;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes riskPulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.02); }
+    100% { transform: scale(1); }
+}
+
+.risk-pulse {
+    animation: riskPulse 2s infinite;
+}
+
+.high-risk {
+    color: #ef4444;
+    font-weight: bold;
+}
+
+.medium-risk {
+    color: #f59e0b;
+    font-weight: bold;
+}
+
+.low-risk {
+    color: #10b981;
+    font-weight: bold;
+}
+</style>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Add initial pulse animation to draw attention
+        const expandText = document.querySelector('#calculatorArrow').parentElement;
+        expandText.classList.add('header-pulse');
+    });
+    
+    function toggleCalculator() {
+        const content = document.getElementById('calculatorContent');
+        const arrow = document.getElementById('calculatorArrow');
+        content.classList.toggle('hidden');
+        arrow.classList.toggle('rotate-180');
+        
+        // Remove pulse animation after first click
+        const expandText = arrow.parentElement;
+        expandText.classList.remove('header-pulse');
+    }
+    
+    function calculateRisk() {
+        const time = parseInt(document.getElementById('timeOfDay').value);
+        const intensity = parseInt(document.getElementById('intensity').value);
+        
+        // Get all threat checkboxes
+        const threats = {
+            roommate: document.querySelector('.threat-checkbox[data-threat="roommate"]').checked,
+            cat: document.querySelector('.threat-checkbox[data-threat="cat"]').checked,
+            lightSleeper: document.querySelector('.threat-checkbox[data-threat="lightSleeper"]').checked,
+            parents: document.querySelector('.threat-checkbox[data-threat="parents"]').checked,
+            creaky: document.querySelector('.threat-checkbox[data-threat="creaky"]').checked,
+            headphones: document.querySelector('.threat-checkbox[data-threat="headphones"]').checked,
+            mechanical: document.querySelector('.threat-checkbox[data-threat="mechanical"]').checked,
+            discord: document.querySelector('.threat-checkbox[data-threat="discord"]').checked
+        };
+        
+        // Calculate base risk score
+        let riskScore = time + (Object.values(threats).filter(t => t).length * 2) + (intensity / 2);
+        
+        // Get DOM elements
+        const result = document.getElementById('riskResult');
+        const riskLevel = document.getElementById('riskLevel');
+        const recommendation = document.getElementById('recommendation');
+        const threatCombo = document.getElementById('threatCombo');
+        
+        // Show the result container
+        result.classList.remove('hidden');
+        
+        // Initialize recommendations and special combinations
+        let recommendations = [];
+        let specialCombos = [];
+    
+        // Time-based recommendations
+        switch(time) {
+            case 1:
+                recommendations.push("☀️ Early bird advantage - mask clicks with morning routine sounds");
+                break;
+            case 2:
+                recommendations.push("🌞 Deploy fake work screen mode during suspicious check-ins");
+                break;
+            case 3:
+                recommendations.push("🌆 Evening stealth required - consider background noise coverage");
+                break;
+            case 4:
+                riskScore += 3;
+                recommendations.push("🌙 Extreme caution required - activate Midnight Ninja Mode™");
+                break;
+        }
+    
+        // Check individual threats
+        if (threats.roommate) {
+            riskScore += 2;
+            recommendations.push("👤 Activate Roommate Radar™ for movement detection");
+        }
+    
+        if (threats.cat) {
+            riskScore += 2;
+            recommendations.push("🐱 Deploy emergency cat toys as diversionary tactics");
+            if (intensity > 7) {
+                recommendations.push("⚠️ High-intensity gaming may trigger cat curiosity protocol");
+            }
+        }
+    
+        if (threats.lightSleeper) {
+            riskScore += 3;
+            recommendations.push("👂 Enable our Ultra Stealth Sound Dampening Field™");
+        }
+    
+        if (threats.parents) {
+            riskScore += 3;
+            recommendations.push("👪 Keep homework.exe ready for instant deployment");
+        }
+    
+        if (threats.creaky) {
+            riskScore += 2;
+            recommendations.push("🪑 Map out safe zones and maintain stationary position");
+        }
+    
+        if (threats.headphones) {
+            riskScore += 2;
+            recommendations.push("🎧 Calibrate volume carefully - you can't hear your own clicks!");
+        }
+    
+        if (threats.mechanical) {
+            riskScore += 2.5;
+            recommendations.push("⌨️ Nearby mechanical keyboard may provide click coverage");
+        }
+    
+        if (threats.discord) {
+            riskScore += 1.5;
+            recommendations.push("💬 Mute Discord immediately! Notification risk critical!");
+        }
+    
+        // Check special combinations
+        if (threats.cat && threats.parents) {
+            specialCombos.push("🚨 ULTIMATE BETRAYAL RISK: Cat + Parents = Maximum Detection Probability");
+            riskScore += 5;
+        }
+    
+        if (threats.lightSleeper && time === 4) {
+            specialCombos.push("💀 IMPOSSIBLE MODE ACTIVATED: Light Sleeper + 3 AM Gaming");
+            riskScore += 5;
+        }
+    
+        if (threats.mechanical && threats.lightSleeper) {
+            specialCombos.push("⚠️ NOISE AMPLIFICATION CRISIS: Mechanical Keyboard + Light Sleeper");
+            riskScore += 4;
+        }
+    
+        if (threats.discord && threats.parents && time === 4) {
+            specialCombos.push("🎮 STEALTH NIGHTMARE: Discord + Parents + 3 AM = Certain Doom");
+            riskScore += 6;
+        }
+    
+        // Check if all threats are active
+        const threatCount = Object.values(threats).filter(t => t).length;
+        if (threatCount === Object.keys(threats).length) {
+            specialCombos.push("🏆 SILENT GAMING MASTER CHALLENGE ACTIVATED!");
+            riskScore += 10;
+            recommendations.push("Consider immediate gaming postponement or upgrade to our Legendary Ninja Package™");
+        }
+    
+        // Intensity-based additional recommendations
+        if (intensity >= 8) {
+            recommendations.push("🎮 High intensity detected! Enable Rage Suppression Protocol™");
+            if (threatCount > 3) {
+                recommendations.push("⚡ Multiple threats + High intensity = Critical Risk Level");
+            }
+        }
+    
+        // Determine risk level and title
+        let riskTitle, riskClass;
+        if (riskScore < 8) {
+            riskTitle = "Low Risk - Proceed with Basic Stealth";
+            riskClass = "low-risk";
+        } else if (riskScore < 15) {
+            riskTitle = "Moderate Risk - Enhanced Stealth Required";
+            riskClass = "medium-risk";
+        } else if (riskScore < 25) {
+            riskTitle = "High Risk - Maximum Stealth Protocol";
+            riskClass = "high-risk";
+        } else {
+            riskTitle = "EXTREME RISK - MISSION IMPOSSIBLE";
+            riskClass = "high-risk risk-pulse";
+        }
+    
+        // Update the display
+        riskLevel.innerHTML = `
+            <div class="${riskClass}">
+                <div class="text-2xl mb-2">Risk Score: ${riskScore.toFixed(1)}</div>
+                <div>${riskTitle}</div>
+            </div>
+        `;
+    
+        recommendation.innerHTML = `
+            <div class="space-y-2">
+                ${recommendations.map(rec => `<div class="p-2 bg-white rounded-lg shadow-sm">${rec}</div>`).join('')}
+            </div>
+        `;
+    
+        if (specialCombos.length > 0) {
+            threatCombo.innerHTML = `
+                <div class="mt-4 space-y-2">
+                    <div class="font-bold text-lg mb-2">Special Threat Combinations Detected!</div>
+                    ${specialCombos.map(combo => `<div class="p-2 bg-white rounded-lg shadow-sm">${combo}</div>`).join('')}
+                </div>
+            `;
+        } else {
+            threatCombo.innerHTML = '';
+        }
+    
+        // Add animation
+        result.style.animation = "fadeIn 0.5s ease-in-out";
+    }
+    </script>
+
+<!-- Click Risk Calculator END -->
+<!-- Excuse Gen START -->
+
+<section class="py-16 relative overflow-hidden">
+    <!-- Floating Game Icons Background -->
+    <div class="floating-icons absolute inset-0 pointer-events-none">
+        <div class="icon" data-game="fortnite">🎮</div>
+        <div class="icon" data-game="minecraft">⛏️</div>
+        <div class="icon" data-game="valorant">🎯</div>
+        <div class="icon" data-game="cod">🎪</div>
+        <div class="icon" data-game="rage">😤</div>
+        <div class="icon" data-game="keyboard">⌨️</div>
+    </div>
+
+    <!-- Main Card -->
+    <div class="max-w-4xl mx-auto px-4">
+        <div class="bg-white rounded-2xl shadow-xl border-2 border-purple-200 overflow-hidden">
+            <!-- Card Header -->
+            <div class="bg-gradient-to-r from-purple-600 to-purple-800 p-8 text-white relative">
+                <div class="sparkle-background"></div>
+                <h2 class="text-3xl font-bold mb-2">Rage Excuse Generator</h2>
+                <p class="text-purple-200">Turn your gaming rage into believable excuses!</p>
+                
+                <!-- Rage Meter -->
+                <div class="absolute top-4 right-4 flex items-center space-x-2">
+                    <span class="text-sm">Rage Level:</span>
+                    <div id="rageMeter" class="w-32 h-4 bg-purple-900 rounded-full overflow-hidden">
+                        <div id="rageFill" class="h-full bg-gradient-to-r from-green-400 to-red-500 transition-all duration-500"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Main Content -->
+            <div class="p-8">
+                <!-- Situation Selectors -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+                    <!-- What Happened? -->
+                    <div>
+                        <label class="block text-sm font-medium mb-2">What happened? 💀</label>
+                        <select id="rageSituation" class="w-full p-3 rounded-lg border-2 border-purple-100 focus:border-purple-500 transition-all hover:border-purple-300">
+                            <option value="yelling">Got Caught Yelling</option>
+                            <option value="keyboard">Slammed Keyboard/Mouse</option>
+                            <option value="desk">Hit the Desk</option>
+                            <option value="ragequit">Rage Quit Mid-Game</option>
+                            <option value="controller">Threw Controller (but caught it)</option>
+                            <option value="trash">Trash Talking Too Loud</option>
+                            <option value="swearing">Got Caught Swearing</option>
+                        </select>
+                    </div>
+
+                    <!-- Who Caught You? -->
+                    <div>
+                        <label class="block text-sm font-medium mb-2">Who caught you? 👀</label>
+                        <select id="whoHeard" class="w-full p-3 rounded-lg border-2 border-purple-100 focus:border-purple-500 transition-all hover:border-purple-300">
+                            <option value="mom">Mom (Hard Mode)</option>
+                            <option value="dad">Dad (Usually Understands)</option>
+                            <option value="sibling">Sibling (Blackmail Risk)</option>
+                            <option value="teacher">Teacher (Online Class)</option>
+                            <option value="grandparents">Grandparents (Extra Hard)</option>
+                            <option value="neighbor">Neighbor (Volume Check)</option>
+                        </select>
+                    </div>
+
+                    <!-- Game Selection -->
+                    <div>
+                        <label class="block text-sm font-medium mb-2">The Game 🎮</label>
+                        <select id="gameType" class="w-full p-3 rounded-lg border-2 border-purple-100 focus:border-purple-500 transition-all hover:border-purple-300">
+                            <option value="fortnite">Fortnite</option>
+                            <option value="valorant">Valorant</option>
+                            <option value="minecraft">Minecraft</option>
+                            <option value="cod">Call of Duty</option>
+                            <option value="league">League of Legends</option>
+                            <option value="roblox">Roblox</option>
+                        </select>
+                    </div>
+
+                    <!-- Rage Intensity -->
+                    <div>
+                        <label class="block text-sm font-medium mb-2">Rage Intensity 🌡️</label>
+                        <input type="range" id="rageIntensity" min="1" max="10" class="w-full accent-purple-600" oninput="updateRageMeter(this.value)">
+                        <div class="flex justify-between text-xs text-gray-500 mt-1">
+                            <span>Mild Annoyance</span>
+                            <span>Full Meltdown</span>
+                        </div>
+                    </div>
+
+                    <!-- Generate Button -->
+                <button onclick="generateNewExcuse()" class="w-full bg-purple-600 text-white py-4 rounded-xl hover:bg-purple-700 transition-all transform hover:-translate-y-1 text-lg font-bold flex items-center justify-center space-x-2">
+                    <span>Generate Emergency Excuse</span>
+                    <span class="text-2xl">🎮</span>
+                </button>
+
+                <!-- Generated Content Area -->
+                <div id="excuseContent" class="space-y-6 opacity-0 transition-all duration-300">
+                    <!-- Excuse Display -->
+                    <div class="bg-purple-50 p-6 rounded-xl border-2 border-purple-100">
+                        <div class="flex justify-between items-start mb-4">
+                            <h3 class="font-bold text-lg">Your Emergency Excuse:</h3>
+                            <button onclick="copyExcuse()" class="text-purple-600 hover:text-purple-700 transition-colors">
+                                📋 Copy
+                            </button>
+                        </div>
+                        <p id="excuseText" class="text-xl font-medium mb-4"></p>
+                        <div id="realityCheck" class="text-sm text-gray-500 italic"></div>
+                    </div>
+
+                    <!-- Success Probability -->
+                    <div class="bg-gray-50 p-4 rounded-xl">
+                        <div class="flex items-center space-x-4">
+                            <div class="w-full">
+                                <div class="flex justify-between mb-2">
+                                    <span class="text-sm font-medium">Success Probability:</span>
+                                    <span id="successRate" class="text-sm font-bold">0%</span>
+                                </div>
+                                <div class="h-2 bg-gray-200 rounded-full overflow-hidden">
+                                    <div id="successBar" class="h-full bg-gradient-to-r from-red-500 to-green-500 transition-all duration-1000" style="width: 0%"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Emergency Tips -->
+                    <div id="emergencyTips" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <!-- Tips will be dynamically added here -->
+                    </div>
+
+                    <!-- Escape Routes -->
+                    <div id="escapeRoutes" class="bg-gray-50 p-4 rounded-xl">
+                        <h4 class="font-bold mb-2">Quick Escape Routes:</h4>
+                        <div id="routesList" class="space-y-2">
+                            <!-- Routes will be dynamically added here -->
+                        </div>
+                    </div>
+                </div>
+
+
+
+                <!-- History Tracker -->
+                <div id="excuseHistory" class="mt-6">
+                    <h4 class="font-medium text-sm text-gray-600 mb-2">Previous Excuses:</h4>
+                    <div class="space-y-2 max-h-32 overflow-y-auto" id="historyList">
+                        <!-- History items will be added here -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<style>
+/* Floating Icons Animation */
+.floating-icons {
+    z-index: 0;
+}
+
+.floating-icons .icon {
+    position: absolute;
+    font-size: 2rem;
+    opacity: 0.1;
+    animation: float 15s infinite linear;
+}
+
+@keyframes float {
+    0% {
+        transform: translate(0, 0) rotate(0deg);
+        opacity: 0;
+    }
+    50% {
+        opacity: 0.1;
+    }
+    100% {
+        transform: translate(var(--translate-x, 100px), var(--translate-y, 100px)) rotate(360deg);
+        opacity: 0;
+    }
+}
+
+/* Sparkle Background */
+.sparkle-background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    overflow: hidden;
+    z-index: 0;
+}
+
+.sparkle {
+    position: absolute;
+    width: 4px;
+    height: 4px;
+    background: white;
+    border-radius: 50%;
+    opacity: 0;
+    animation: sparkle 2s infinite linear;
+}
+
+@keyframes sparkle {
+    0% {
+        transform: translate(0, 0) scale(0);
+        opacity: 0;
+    }
+    50% {
+        opacity: 0.5;
+    }
+    100% {
+        transform: translate(var(--translate-x, 50px), var(--translate-y, 50px)) scale(1);
+        opacity: 0;
+    }
+}
+
+/* Success Probability Animation */
+@keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+    100% { transform: scale(1); }
+}
+
+.pulse {
+    animation: pulse 2s infinite;
+}
+
+/* Shake Animation */
+@keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    25% { transform: translateX(-5px); }
+    75% { transform: translateX(5px); }
+}
+
+.shake {
+    animation: shake 0.5s ease-in-out;
+}
+
+/* Sliding Animation */
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.slide-in {
+    animation: slideIn 0.3s ease-out forwards;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #888;
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #555;
+}
+</style>
+<script>
+    // Initialize variables for tracking
+    let excuseHistory = [];
+    let currentRageLevel = 1;
+    
+    // Sound effects (optional - can be enabled by user)
+    const sounds = {
+        generate: new Audio('data:audio/mp3;base64,SUQzBAAAAAAAI1RTU0UAAAAPAAADTGF2ZjU4Ljc2LjEwMAAAAAAAAAAAAAAA//tQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAASW5mbwAAAA8AAAASAAAeMwAUFBQUFCIiIiIiIjAwMDAwPz8/Pz8/TU1NTU1NW1tbW1tbamppampqeHh4eHh4hoaGhoaGlJSUlJSkoaGhoaGhsbGxsbGxvr6+vr6+zMzMzMzM2tra2tra6Ojo6Ojo9/f39/f3//////////8AAAAATGF2YzU4LjEzAAAAAAAAAAAAAAAAJAQKAAAAAAAAHjOZTf9C'),
+        success: new Audio('data:audio/mp3;base64,SUQzBAAAAAAAI1RTU0UAAAAPAAADTGF2ZjU4Ljc2LjEwMAAAAAAAAAAAAAAA//tQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAASW5mbwAAAA8AAAASAAAeMwAUFBQUFCIiIiIiIjAwMDAwPz8/Pz8/TU1NTU1NW1tbW1tbamppampqeHh4eHh4hoaGhoaGlJSUlJSkoaGhoaGhsbGxsbGxvr6+vr6+zMzMzMzM2tra2tra6Ojo6Ojo9/f39/f3//////////8AAAAATGF2YzU4LjEzAAAAAAAAAAAAAAAAJAQKAAAAAAAAHjOZTf9C'),
+        fail: new Audio('data:audio/mp3;base64,SUQzBAAAAAAAI1RTU0UAAAAPAAADTGF2ZjU4Ljc2LjEwMAAAAAAAAAAAAAAA//tQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAASW5mbwAAAA8AAAASAAAeMwAUFBQUFCIiIiIiIjAwMDAwPz8/Pz8/TU1NTU1NW1tbW1tbamppampqeHh4eHh4hoaGhoaGlJSUlJSkoaGhoaGhsbGxsbGxvr6+vr6+zMzMzMzM2tra2tra6Ojo6Ojo9/f39/f3//////////8AAAAATGF2YzU4LjEzAAAAAAAAAAAAAAAAJAQKAAAAAAAAHjOZTf9C')
+    };
+    
+    // Excuse templates
+    const excuseTemplates = {
+        yelling: {
+            mom: [
+                "I was just giving callouts to my team!",
+                "The game glitched at a crucial moment!",
+                "Someone was trying to hack my account!"
+            ],
+            dad: [
+                "Just practicing my gaming communication skills!",
+                "It was an intense final match!",
+                "My teammate couldn't hear the strategy!"
+            ],
+            sibling: [
+                "I'll give you my dessert if you don't tell",
+                "That wasn't rage, I was celebrating!",
+                "I'll let you play next if you keep quiet"
+            ],
+            teacher: [
+                "My mic was accidentally unmuted during a victory!",
+                "I was practicing for drama class!",
+                "Technical difficulties with the volume!"
+            ]
+        },
+        keyboard: {
+            mom: [
+                "The keyboard had a stuck key, had to fix it!",
+                "Was cleaning the keyboard, it was dusty!",
+                "Testing if all the keys work properly!"
+            ]
+        }
+        // Add more templates based on situations...
+    };
+    
+    // Game-specific excuses
+    const gameExcuses = {
+        fortnite: [
+            "The build didn't place!",
+            "My wall wouldn't build!",
+            "Someone third-partied me!"
+        ],
+        valorant: [
+            "The shot should have hit!",
+            "My abilities didn't activate!",
+            "The spray pattern was random!"
+        ],
+        minecraft: [
+            "Creeper came out of nowhere!",
+            "Lost all my diamonds!",
+            "Server lag killed me!"
+        ]
+        // Add more games...
+    };
+    
+    // Emergency escape routes
+    const escapeRoutes = [
+        "Quick bathroom break excuse",
+        "Pretend your headphones died",
+        "Say you have homework to finish",
+        "Fake a connection issue",
+        "Ask what's for dinner as distraction"
+    ];
+    
+    // Generate new excuse
+    function generateNewExcuse() {
+        // Get current values
+        const situation = document.getElementById('rageSituation').value;
+        const audience = document.getElementById('whoHeard').value;
+        const game = document.getElementById('gameType').value;
+        const intensity = parseInt(document.getElementById('rageIntensity').value);
+    
+        // Generate excuse
+        const excuse = generateExcuse(situation, audience, game, intensity);
+        
+        // Update UI with animations
+        updateUI(excuse);
+        
+        // Add to history
+        addToHistory(excuse);
+    
+        // Play sound effect
+        playSound('generate');
+    
+        // Show success probability with animation
+        updateSuccessProbability(intensity, audience);
+    
+        // Generate and show escape routes
+        showEscapeRoutes();
+    
+        // Show emergency tips
+        showEmergencyTips(audience, intensity);
+    
+        // Trigger animations
+        triggerAnimations();
+    }
+    
+    function generateExcuse(situation, audience, game, intensity) {
+        let baseExcuse = getRandomItem(excuseTemplates[situation][audience]);
+        let gameSpecific = getRandomItem(gameExcuses[game]);
+        
+        return `${baseExcuse} ${gameSpecific}`;
+    }
+    
+    function updateUI(excuse) {
+        const excuseContent = document.getElementById('excuseContent');
+        const excuseText = document.getElementById('excuseText');
+        
+        // Add slide-in animation
+        excuseContent.classList.remove('opacity-0');
+        excuseContent.style.animation = 'slideIn 0.3s ease-out';
+        
+        // Update text with typing effect
+        typeWriter(excuseText, excuse);
+    }
+    
+    function updateSuccessProbability(intensity, audience) {
+        const successRate = calculateSuccessRate(intensity, audience);
+        const successBar = document.getElementById('successBar');
+        const successText = document.getElementById('successRate');
+    
+        // Animate the success bar
+        successBar.style.width = `${successRate}%`;
+        successText.textContent = `${successRate}%`;
+        
+        // Add pulse animation if high probability
+        if (successRate > 75) {
+            successBar.classList.add('pulse');
+        }
+    }
+    
+    function showEscapeRoutes() {
+        const routesList = document.getElementById('routesList');
+        routesList.innerHTML = '';
+        
+        // Get 3 random escape routes
+        const selectedRoutes = getRandomItems(escapeRoutes, 3);
+        
+        selectedRoutes.forEach((route, index) => {
+            const routeElement = document.createElement('div');
+            routeElement.className = 'p-2 bg-white rounded-lg shadow-sm slide-in';
+            routeElement.style.animationDelay = `${index * 0.1}s`;
+            routeElement.textContent = `${index + 1}. ${route}`;
+            routesList.appendChild(routeElement);
+        });
+    }
+    
+    function showEmergencyTips(audience, intensity) {
+        const tipsContainer = document.getElementById('emergencyTips');
+        tipsContainer.innerHTML = '';
+        
+        const tips = generateTips(audience, intensity);
+        tips.forEach((tip, index) => {
+            const tipElement = document.createElement('div');
+            tipElement.className = 'bg-white p-4 rounded-lg shadow-sm slide-in';
+            tipElement.style.animationDelay = `${index * 0.1}s`;
+            tipElement.innerHTML = `<span class="text-purple-600">💡</span> ${tip}`;
+            tipsContainer.appendChild(tipElement);
+        });
+    }
+    
+    // Utility functions
+    function getRandomItem(array) {
+        return array[Math.floor(Math.random() * array.length)];
+    }
+    
+    function getRandomItems(array, count) {
+        return array.sort(() => 0.5 - Math.random()).slice(0, count);
+    }
+    
+    function calculateSuccessRate(intensity, audience) {
+        let base = 100 - (intensity * 5);
+        if (audience === 'mom') base -= 20;
+        if (audience === 'teacher') base -= 30;
+        return Math.max(Math.min(base, 100), 0);
+    }
+    
+    function playSound(type) {
+        if (sounds[type]) {
+            sounds[type].play().catch(() => {});
+        }
+    }
+    
+    function typeWriter(element, text, speed = 30) {
+        let i = 0;
+        element.textContent = '';
+        const type = () => {
+            if (i < text.length) {
+                element.textContent += text.charAt(i);
+                i++;
+                setTimeout(type, speed);
+            }
+        };
+        type();
+    }
+    
+    function addToHistory(excuse) {
+        excuseHistory.unshift(excuse);
+        if (excuseHistory.length > 5) excuseHistory.pop();
+        
+        const historyList = document.getElementById('historyList');
+        historyList.innerHTML = '';
+        
+        excuseHistory.forEach((item, index) => {
+            const historyItem = document.createElement('div');
+            historyItem.className = 'text-sm text-gray-600 p-2 bg-gray-50 rounded';
+            historyItem.textContent = item;
+            historyList.appendChild(historyItem);
+        });
+    }
+    
+    function updateRageMeter(value) {
+        const rageFill = document.getElementById('rageFill');
+        const percentage = (value / 10) * 100;
+        rageFill.style.width = `${percentage}%`;
+        
+        // Update currentRageLevel for other functions to use
+        currentRageLevel = value;
+    }
+    
+    function generateTips(audience, intensity) {
+        const tips = [
+            "Take deep breaths before explaining",
+            "Offer to help with something as distraction",
+            "Blame it on connection issues",
+            "Have homework ready to show as proof",
+            "Keep voice calm and steady"
+        ];
+        return getRandomItems(tips, 2);
+    }
+    
+    // Initialize floating icons
+    function initFloatingIcons() {
+        const icons = document.querySelectorAll('.floating-icons .icon');
+        icons.forEach(icon => {
+            setRandomPosition(icon);
+            setInterval(() => setRandomPosition(icon), 15000);
+        });
+    }
+    
+    function setRandomPosition(element) {
+        const x = Math.random() * window.innerWidth;
+        const y = Math.random() * window.innerHeight;
+        element.style.setProperty('--translate-x', `${x}px`);
+        element.style.setProperty('--translate-y', `${y}px`);
+    }
+    
+    // Initialize sparkles
+    function initSparkles() {
+        const sparkleContainer = document.querySelector('.sparkle-background');
+        for (let i = 0; i < 20; i++) {
+            createSparkle(sparkleContainer);
+        }
+    }
+    
+    function createSparkle(container) {
+        const sparkle = document.createElement('div');
+        sparkle.className = 'sparkle';
+        sparkle.style.left = `${Math.random() * 100}%`;
+        sparkle.style.top = `${Math.random() * 100}%`;
+        container.appendChild(sparkle);
+    }
+    
+    // Initialize everything when the page loads
+    document.addEventListener('DOMContentLoaded', () => {
+        initFloatingIcons();
+        initSparkles();
+    });
+    </script>
 
 
 
 
+<!-- Excuse Gen END -->
 <!-- Testimonials -->
 <section class="py-16 bg-purple-50">
     <div class="container">
